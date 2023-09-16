@@ -1,4 +1,4 @@
-extends RigidBody3D
+extends VehicleBody3D
 
 @export var maxVelocity: float
 @export var acceleration: float
@@ -9,21 +9,24 @@ func _input(event):
 	if (event.is_action_pressed("ui_cancel")):
 		get_tree().quit()
 
-func _integrate_forces(delta):
+func _physics_process(delta):
 	apply_throttle_and_brakes(delta)
 	turn(delta)
+	
+	if (position.y < -100):
+		position = Vector3(0, 2, 0)
+		rotation = Vector3(0, 0, 0)
+		linear_velocity = Vector3(0, 0, 0)
+		angular_velocity = Vector3(0, 0, 0)
 	
 
 func apply_throttle_and_brakes(_delta):
 	var throttle: float = Input.get_action_strength("throttle")
-	var brake: float = Input.get_action_strength("brake")
+	var brakeRate: float = Input.get_action_strength("brake")
 	
-	var forwardVector: Vector3 = basis.z
-	
-	apply_force(((throttle - brake) * acceleration) * -forwardVector)
+	set_engine_force((throttle - brakeRate) * acceleration)
 	
 
-func turn(_delta):	
+func turn(delta):	
 	var turningDirection: float = Input.get_axis("turn_left", "turn_right")
-	#rotation_degrees.y += -turningDirection * delta * turnSpeed
-	apply_torque_impulse(Vector3(0.0, -turningDirection * turnSpeed, 0.0))
+	steering = lerp(steering, -turningDirection, .2)

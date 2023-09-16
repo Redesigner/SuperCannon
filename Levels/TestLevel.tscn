@@ -1,14 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://bx2nlku8mjerv"]
+[gd_scene load_steps=10 format=3 uid="uid://bx2nlku8mjerv"]
 
 [ext_resource type="Material" uid="uid://pn71uf1lemce" path="res://Assets/Materials/grid.material" id="1_ic85h"]
 [ext_resource type="PackedScene" uid="uid://doteuw724lu1r" path="res://Objects/AssembledCannons/AssembledCannon.tscn" id="2_fi2vs"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_ajvw0"]
-size = Vector3(25, 0.1, 25)
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_otvck"]
-material = ExtResource("1_ic85h")
-size = Vector2(25, 25)
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_8bmkd"]
 
@@ -19,7 +12,31 @@ sky_material = SubResource("PhysicalSkyMaterial_8bmkd")
 background_mode = 2
 sky = SubResource("Sky_thtib")
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_ajvw0"]
+size = Vector3(100, 0.1, 100)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_otvck"]
+material = ExtResource("1_ic85h")
+size = Vector2(100, 100)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_a0hgs"]
+points = PackedVector3Array(5, 1, 5, 5, 1, -5, 5, -1, 5, 5, -1, -5, -5, -1, 5, -5, -1, -5)
+
+[sub_resource type="PrismMesh" id="PrismMesh_xr8l7"]
+left_to_right = 1.0
+size = Vector3(10, 2, 10)
+
 [node name="TestLevel" type="Node3D"]
+
+[node name="Environment" type="Node" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
+transform = Transform3D(-0.771812, -0.595035, 0.224143, -0.433013, 0.75, 0.5, -0.465625, 0.288849, -0.836516, 0, 4.45933, 0)
+light_energy = 2.0
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
+environment = SubResource("Environment_v4rr7")
 
 [node name="Floor" type="StaticBody3D" parent="."]
 
@@ -30,11 +47,14 @@ shape = SubResource("BoxShape3D_ajvw0")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
 mesh = SubResource("PlaneMesh_otvck")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.771812, -0.595035, 0.224144, -0.433013, 0.75, 0.5, -0.465625, 0.288849, -0.836516, 0, 4.45933, 0)
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_v4rr7")
-
 [node name="AssembledCannon" parent="." instance=ExtResource("2_fi2vs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="Ramp" type="StaticBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 30, 1, -3)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ramp"]
+shape = SubResource("ConvexPolygonShape3D_a0hgs")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ramp"]
+mesh = SubResource("PrismMesh_xr8l7")
