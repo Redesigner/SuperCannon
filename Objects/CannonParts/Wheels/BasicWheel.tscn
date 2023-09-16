@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://bam8x4yyu25nt"]
+
+[ext_resource type="PackedScene" uid="uid://dkxca4jc8y41p" path="res://Assets/Meshes/SuperCanonWheel.blend" id="1_16ept"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_rcybm"]
+friction = 3.0
+rough = true
+bounce = 0.5
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_1jnjy"]
+height = 0.3
+radius = 0.3
+
+[node name="BasicWheel" type="RigidBody3D"]
+mass = 0.1
+physics_material_override = SubResource("PhysicsMaterial_rcybm")
+
+[node name="SuperCanonWheel" parent="." instance=ExtResource("1_16ept")]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0.15)
+shape = SubResource("CylinderShape3D_1jnjy")

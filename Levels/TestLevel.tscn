@@ -1,0 +1,40 @@
+[gd_scene load_steps=8 format=3 uid="uid://bx2nlku8mjerv"]
+
+[ext_resource type="Material" uid="uid://pn71uf1lemce" path="res://Assets/Materials/grid.material" id="1_ic85h"]
+[ext_resource type="PackedScene" uid="uid://doteuw724lu1r" path="res://Objects/AssembledCannons/AssembledCannon.tscn" id="2_fi2vs"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ajvw0"]
+size = Vector3(25, 0.1, 25)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_otvck"]
+material = ExtResource("1_ic85h")
+size = Vector2(25, 25)
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_8bmkd"]
+
+[sub_resource type="Sky" id="Sky_thtib"]
+sky_material = SubResource("PhysicalSkyMaterial_8bmkd")
+
+[sub_resource type="Environment" id="Environment_v4rr7"]
+background_mode = 2
+sky = SubResource("Sky_thtib")
+
+[node name="TestLevel" type="Node3D"]
+
+[node name="Floor" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
+shape = SubResource("BoxShape3D_ajvw0")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("PlaneMesh_otvck")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.771812, -0.595035, 0.224144, -0.433013, 0.75, 0.5, -0.465625, 0.288849, -0.836516, 0, 4.45933, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_v4rr7")
+
+[node name="AssembledCannon" parent="." instance=ExtResource("2_fi2vs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
