@@ -5,9 +5,9 @@
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/godot.hpp>
 
-#include "../parts/part.h"
+#include "../classes/parts/part.h"
 
-#include "../parts/wheels/wheel.h"
+#include "../classes/parts/wheels/wheel.h"
 
 using namespace godot;
 

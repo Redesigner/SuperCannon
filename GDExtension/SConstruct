@@ -16,8 +16,9 @@ env = SConscript("godot-cpp/SConstruct")
 env.Append(CPPPATH=["src/"])
 sources =  Glob("src/*.cpp")
 sources += Glob("src/extension/*.cpp")
-sources += Glob("src/parts/*.cpp")
-sources += Glob("src/parts/wheels/*.cpp")
+
+sources += Glob("src/classes/parts/*.cpp")
+sources += Glob("src/classes/parts/wheels/*.cpp")
 
 if env["platform"] == "macos":
     library = env.SharedLibrary(
