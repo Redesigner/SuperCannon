@@ -29,7 +29,7 @@ protected:
     RigidBody3D * get_attachment() const;
 
 private:
-    DECLARE_PROPERTY(NodePath, attachmentPath);
+    DECLARE_PROPERTY(NodePath, attachment_path);
 
     RigidBody3D *_attachment;
 };

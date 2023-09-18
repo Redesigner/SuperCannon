@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://xo4o7eebd0mp"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_vulik"]
+top_radius = 0.3
+bottom_radius = 0.3
+height = 0.1
+
+[node name="CustomWheel" type="Wheel"]
+wheel_mesh_path = NodePath("MeshInstance3D")
+friction_coeffecient = 5.85815e+11
+radius = 0.3
+max_suspension_length = 1.0
+spring_constant = 500.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, 0, 0, 0)
+mesh = SubResource("CylinderMesh_vulik")

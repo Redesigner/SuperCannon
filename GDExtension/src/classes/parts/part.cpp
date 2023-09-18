@@ -18,7 +18,7 @@ Part::~Part()
 
 void Part::_bind_methods()
 {
-    BIND_PROPERTY(Variant::NODE_PATH, attachmentPath, Part);
+    BIND_PROPERTY(Variant::NODE_PATH, attachment_path, Part);
 }
 
 void Part::_ready()
@@ -29,7 +29,7 @@ void Part::_ready()
         return;
     }
 
-    ASSIGN_NODE(_attachment, RigidBody3D, _attachmentPath);
+    ASSIGN_NODE(_attachment, RigidBody3D, _attachment_path);
 }
 
 void Part::power(float amount)

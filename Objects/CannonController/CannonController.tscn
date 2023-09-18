@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://bi6a330114ur0"]
+[gd_scene load_steps=6 format=3 uid="uid://bi6a330114ur0"]
 
 [ext_resource type="Script" path="res://Objects/CannonController/CannonController.gd" id="1_tam0s"]
+[ext_resource type="PackedScene" uid="uid://xo4o7eebd0mp" path="res://Objects/CannonParts/Wheels/CustomWheel.tscn" id="2_d7gy1"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_fp2ls"]
 size = Vector3(1, 0.5, 2)
@@ -31,5 +32,24 @@ collision_mask = 0
 spring_length = 5.0
 
 [node name="Camera3D" type="Camera3D" parent="SpringArm3D"]
-current = true
 fov = 60.0
+
+[node name="CustomWheel" parent="." instance=ExtResource("2_d7gy1")]
+friction_coeffecient = 0.0
+attachment_path = NodePath("..")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.5, 1)
+
+[node name="CustomWheel2" parent="." instance=ExtResource("2_d7gy1")]
+friction_coeffecient = 0.0
+attachment_path = NodePath("..")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -0.5, 1)
+
+[node name="CustomWheel3" parent="." instance=ExtResource("2_d7gy1")]
+friction_coeffecient = 0.0
+attachment_path = NodePath("..")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.5, -1)
+
+[node name="CustomWheel4" parent="." instance=ExtResource("2_d7gy1")]
+friction_coeffecient = 0.0
+attachment_path = NodePath("..")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -0.5, -1)
