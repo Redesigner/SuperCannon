@@ -4,8 +4,6 @@
 
 [node name="BasicWheel" type="VehicleWheel3D"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
-wheel_radius = 0.3
-suspension_travel = 0.5
 
 [node name="SuperCanonWheel" parent="." instance=ExtResource("1_16ept")]
 transform = Transform3D(-1.31134e-08, 0, -0.3, 0, 0.3, 0, 0.3, 0, -1.31134e-08, 0, 0, 0)

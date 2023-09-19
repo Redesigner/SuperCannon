@@ -27,17 +27,22 @@ private:
 
     Vector3 get_suspension_force(float distance_to_ground) const;
 
-    Vector3 get_total_forces() const;
+    Vector3 get_total_forces(double delta);
 
     // returns how far the suspension is compressed
     // distance should be from
     // touching_ground_out is false if the wheel is not touching the ground
     float get_suspension_compression(bool &touching_ground_out) const;
 
+    // get an approximation of the damping force at the wheel's location
+    Vector3 get_damping_force() const;
+
 
     class MeshInstance3D *_wheel_mesh;
-
     DECLARE_PROPERTY(NodePath, wheel_mesh_path);
+
+    class MeshInstance3D *_force_mesh;
+    DECLARE_PROPERTY(NodePath, force_mesh_path);
 
     // Reusable params for the raycast, so we don't have to reallocate the array every tick
     Ref<class PhysicsRayQueryParameters3D> _rayQueryParameters;
@@ -52,8 +57,14 @@ private:
     DECLARE_PROPERTY(float, max_suspension_length);
     // The spring constant, in N/m
     DECLARE_PROPERTY(float, spring_constant);
+    // Damping factor, unitless
+    DECLARE_PROPERTY(float, damping);
 
     // The torque of the wheel, in Nm
     DECLARE_PROPERTY(float, torque);
+
+    float _previous_distance_to_ground = 0.f;
+
+    float _suspension_velocity = 0.f;
 };
 }

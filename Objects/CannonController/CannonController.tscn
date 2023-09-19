@@ -14,6 +14,7 @@ material = SubResource("StandardMaterial3D_gy5oq")
 size = Vector3(1, 0.5, 2)
 
 [node name="CannonController" type="VehicleBody3D"]
+angular_damp = 2.0
 script = ExtResource("1_tam0s")
 maxVelocity = 100.0
 acceleration = 300.0
@@ -37,19 +38,19 @@ fov = 60.0
 [node name="CustomWheel" parent="." instance=ExtResource("2_d7gy1")]
 friction_coeffecient = 0.0
 attachment_path = NodePath("..")
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.5, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -0.5, -1)
 
 [node name="CustomWheel2" parent="." instance=ExtResource("2_d7gy1")]
 friction_coeffecient = 0.0
 attachment_path = NodePath("..")
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -0.5, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.5, -1)
 
 [node name="CustomWheel3" parent="." instance=ExtResource("2_d7gy1")]
 friction_coeffecient = 0.0
 attachment_path = NodePath("..")
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.5, -1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -0.5, 1)
 
 [node name="CustomWheel4" parent="." instance=ExtResource("2_d7gy1")]
 friction_coeffecient = 0.0
 attachment_path = NodePath("..")
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -0.5, -1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.5, 1)

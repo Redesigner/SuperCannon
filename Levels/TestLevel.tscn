@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://bx2nlku8mjerv"]
+[gd_scene load_steps=11 format=3 uid="uid://bx2nlku8mjerv"]
 
 [ext_resource type="Material" uid="uid://pn71uf1lemce" path="res://Assets/Materials/grid.material" id="1_ic85h"]
 [ext_resource type="PackedScene" uid="uid://bi6a330114ur0" path="res://Objects/CannonController/CannonController.tscn" id="2_1xfsd"]
+[ext_resource type="Script" path="res://Levels/FollowCamera.gd" id="3_c83mg"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_8bmkd"]
 
@@ -31,7 +32,7 @@ size = Vector3(10, 2, 10)
 [node name="Environment" type="Node" parent="."]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
-transform = Transform3D(-0.771812, -0.595035, 0.224143, -0.433013, 0.75, 0.5, -0.465625, 0.288849, -0.836516, 0, 4.45933, 0)
+transform = Transform3D(0.901221, 0.370891, 0.224144, -0.433013, 0.75, 0.500001, 0.0173377, -0.547668, 0.836516, 0, 4.45933, 0)
 light_energy = 2.0
 shadow_enabled = true
 
@@ -48,7 +49,7 @@ shape = SubResource("BoxShape3D_ajvw0")
 mesh = SubResource("PlaneMesh_otvck")
 
 [node name="Ramp" type="StaticBody3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 30, 1, -3)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 1, 15)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ramp"]
 shape = SubResource("ConvexPolygonShape3D_a0hgs")
@@ -57,8 +58,10 @@ shape = SubResource("ConvexPolygonShape3D_a0hgs")
 mesh = SubResource("PrismMesh_xr8l7")
 
 [node name="CannonController" parent="." instance=ExtResource("2_1xfsd")]
-transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 2.68438, 0)
+transform = Transform3D(1, 0, 0, 0, 0.984808, -0.173648, 0, 0.173648, 0.984808, 0, 2.68438, 0)
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-4.2222e-08, -0.258819, 0.965926, -1.13133e-08, 0.965926, 0.258819, -1, 0, -4.37114e-08, 3, 2, 0)
+transform = Transform3D(1.19209e-07, 0.258819, -0.965926, -4.11659e-09, 0.965926, 0.258819, 1, -2.68772e-08, 1.16213e-07, -6, 4, 0)
 current = true
+fov = 45.0
+script = ExtResource("3_c83mg")
