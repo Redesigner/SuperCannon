@@ -38,12 +38,12 @@ void Wheel::_bind_methods()
 
     BIND_PROPERTY(Variant::NODE_PATH, force_mesh_path, Wheel);
 
-    BIND_PROPERTY_HINT(Variant::FLOAT, friction_coeffecient, Wheel, PROPERTY_HINT_RANGE, "0,1,0.1");
+    BIND_PROPERTY_HINT(Variant::FLOAT, friction_coeffecient, Wheel, PROPERTY_HINT_RANGE, "0, 1");
     BIND_PROPERTY_HINT(Variant::FLOAT, radius, Wheel, PROPERTY_HINT_NONE, "suffix:m");
 
     BIND_PROPERTY_HINT(Variant::FLOAT, max_suspension_length, Wheel, PROPERTY_HINT_NONE, "suffix:m");
     BIND_PROPERTY_HINT(Variant::FLOAT, spring_constant, Wheel, PROPERTY_HINT_NONE, "suffix:N/m");
-    BIND_PROPERTY_HINT(Variant::FLOAT, damping, Wheel, PROPERTY_HINT_RANGE, "0, 1, 0.1");
+    BIND_PROPERTY_HINT(Variant::FLOAT, damping, Wheel, PROPERTY_HINT_RANGE, "0, 1");
 
     BIND_PROPERTY_HINT(Variant::FLOAT, torque, Wheel, PROPERTY_HINT_RANGE, "0, 100000, 1, suffix:Nm");
 }
@@ -84,25 +84,39 @@ void Wheel::_physics_process(double delta)
         return;
     }
 
+    _velocity = (get_global_position() - _previous_position) / delta;
+    _previous_position = get_global_position();
+
     Vector3 forces = get_total_forces(delta);
 
     if (_force_mesh)
     {
-        _force_mesh->set_global_position(get_global_position() + forces * 0.0025f);
+        _force_mesh->set_global_position(_wheel_mesh->get_global_position() + forces * 0.01f);
     }
-    attachment->apply_force(forces, get_position());
+    attachment->apply_force(forces, get_global_position() - get_attachment()->get_global_position());
 }
 
 
-Vector3 Wheel::get_friction_force() const
+Vector3 Wheel::get_friction_force(double delta) const
 {
     const Vector3 xAxis = get_global_transform().basis.get_column(0);
-    const float velocityAlongSlideDirection = xAxis.dot(get_attachment()->get_linear_velocity());
 
-    // for now, friction is simply based on mass
-    const float frictionMagnitude = 9.8 * get_attachment()->get_mass() * _friction_coeffecient;
+    const float mass = get_attachment()->get_mass();
+    const float velocityAlongDirection = xAxis.dot(_velocity);
+    const float restitutionForce = velocityAlongDirection * mass; // How much force it would take to bring the object to a stop in one frame
+
+    const float normalForceY = 9.8 * mass /* _floor_normal.y */;
+    const float frictionMagnitude = normalForceY * _friction_coeffecient;
+
+    // Get the one with the smallest magnitude -- frictionMagnitude is always positive
+    const float finalFrictionMagnitude = Math::min(frictionMagnitude, Math::abs(restitutionForce));
+
+    const Vector3 frictionForce = finalFrictionMagnitude * Math::sign(restitutionForce) * -xAxis;
     
-    return Math::min(frictionMagnitude, -velocityAlongSlideDirection) * xAxis;
+    // UtilityFunctions::print( String("[Wheel] normal force: {3}, friction magnitude: {0}, velocity along direction {1}, total friction force {2}").format(Array::make(frictionMagnitude, restitutionForce, finalFrictionMagnitude, normalForceY)));
+
+    // use the opposite sign of our current velocity component
+    return frictionForce;
 }
 
 
@@ -144,7 +158,6 @@ Vector3 Wheel::get_total_forces(double delta)
     }
 
     _suspension_velocity = (_previous_distance_to_ground - distanceToGround) / delta;
-    //UtilityFunctions::print( String("[Wheel] Previous suspension height: {0}, current suspension height: {1}, estimated velocity: {2}").format(Array::make(_previous_distance_to_ground, distanceToGround, _suspension_velocity)) );
     _previous_distance_to_ground = distanceToGround;
 
     Basis basis = get_global_transform().basis;
@@ -153,13 +166,13 @@ Vector3 Wheel::get_total_forces(double delta)
 
     const Vector3 suspensionForce = get_suspension_force(distanceToGround);
 
-    const Vector3 frictionForce = get_friction_force();
+    const Vector3 frictionForce = get_friction_force(delta);
 
-    return torqueForce + suspensionForce /*+ frictionForce*/;
+    return torqueForce + suspensionForce + frictionForce;
 }
 
 
-float Wheel::get_suspension_compression(bool &touching_ground_out) const
+float Wheel::get_suspension_compression(bool &touching_ground_out)
 {
     PhysicsDirectSpaceState3D *spaceState = get_world_3d()->get_direct_space_state();
     const Vector3 wheelPosition = get_global_position();
@@ -185,6 +198,7 @@ float Wheel::get_suspension_compression(bool &touching_ground_out) const
     }
 
     Vector3 floorPosition = result["position"];
+    _floor_normal = result["normal"];
 
     const float distance = (floorPosition - wheelPosition).dot(yAxis) + _radius;
 
@@ -197,15 +211,10 @@ float Wheel::get_suspension_compression(bool &touching_ground_out) const
     return distance;
 }
 
+
 Vector3 Wheel::get_damping_force() const
 {
     const Vector3 yAxis = get_global_transform().basis.get_column(1);
-
-    const Vector3 attachmentVelocity = get_attachment()->get_linear_velocity();
-    const Vector3 attachmentAngularVelocity = get_attachment()->get_angular_velocity() * (Math_PI / 180.0f); // radians
-
-    const Vector3 velocityAtWheelPosition = attachmentVelocity + (attachmentAngularVelocity * get_position());
-    // const Vector3 dampingForce = (velocityAtWheelPosition.dot(yAxis) * _damping * get_attachment()->get_mass()) * -yAxis;
     const Vector3 dampingForce = _suspension_velocity * _damping * get_attachment()->get_mass() * -yAxis;
 
     return dampingForce;

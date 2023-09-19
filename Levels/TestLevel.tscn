@@ -2,7 +2,7 @@
 
 [ext_resource type="Material" uid="uid://pn71uf1lemce" path="res://Assets/Materials/grid.material" id="1_ic85h"]
 [ext_resource type="PackedScene" uid="uid://bi6a330114ur0" path="res://Objects/CannonController/CannonController.tscn" id="2_1xfsd"]
-[ext_resource type="Script" path="res://Levels/FollowCamera.gd" id="3_c83mg"]
+[ext_resource type="Script" path="res://Levels/FollowCamera.gd" id="3_1nuee"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_8bmkd"]
 
@@ -58,10 +58,10 @@ shape = SubResource("ConvexPolygonShape3D_a0hgs")
 mesh = SubResource("PrismMesh_xr8l7")
 
 [node name="CannonController" parent="." instance=ExtResource("2_1xfsd")]
-transform = Transform3D(1, 0, 0, 0, 0.984808, -0.173648, 0, 0.173648, 0.984808, 0, 2.68438, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.68438, 17)
+mass = 40.0
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1.19209e-07, 0.258819, -0.965926, -4.11659e-09, 0.965926, 0.258819, 1, -2.68772e-08, 1.16213e-07, -6, 4, 0)
-current = true
 fov = 45.0
-script = ExtResource("3_c83mg")
+script = ExtResource("3_1nuee")

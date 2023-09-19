@@ -21,7 +21,7 @@ public:
     virtual void _physics_process(double delta) override;
 
 private:
-    Vector3 get_friction_force() const;
+    Vector3 get_friction_force(double delta) const;
 
     Vector3 get_applied_torque_force() const;
 
@@ -32,7 +32,8 @@ private:
     // returns how far the suspension is compressed
     // distance should be from
     // touching_ground_out is false if the wheel is not touching the ground
-    float get_suspension_compression(bool &touching_ground_out) const;
+    // updates our floor normal
+    float get_suspension_compression(bool &touching_ground_out);
 
     // get an approximation of the damping force at the wheel's location
     Vector3 get_damping_force() const;
@@ -66,5 +67,11 @@ private:
     float _previous_distance_to_ground = 0.f;
 
     float _suspension_velocity = 0.f;
+
+    Vector3 _previous_position = Vector3(0.0f, 0.0f, 0.0f);
+
+    Vector3 _velocity = Vector3(0.0f, 0.0f, 0.0f);
+
+    Vector3 _floor_normal = Vector3(0.0f, 0.0f, 0.0f);
 };
 }

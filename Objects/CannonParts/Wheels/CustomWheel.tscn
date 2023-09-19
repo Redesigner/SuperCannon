@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://xo4o7eebd0mp"]
+[gd_scene load_steps=4 format=3 uid="uid://xo4o7eebd0mp"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_vulik"]
 top_radius = 0.3
@@ -14,34 +14,18 @@ material = SubResource("StandardMaterial3D_udskh")
 radius = 0.15
 height = 0.3
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uhouf"]
-render_priority = 1
-shading_mode = 0
-albedo_color = Color(0.14902, 0.243137, 1, 1)
-
-[sub_resource type="SphereMesh" id="SphereMesh_wqejx"]
-material = SubResource("StandardMaterial3D_uhouf")
-radius = 0.1
-height = 0.2
-
 [node name="CustomWheel" type="Wheel"]
 wheel_mesh_path = NodePath("MeshInstance3D")
 force_mesh_path = NodePath("MeshInstance3D2")
-friction_coeffecient = 5.85815e+11
+friction_coeffecient = 1.0
 radius = 0.3
-max_suspension_length = 0.6
-spring_constant = 400.0
-damping = 0.8
-torque = 10.0
+max_suspension_length = 1.5
+spring_constant = 200.0
+damping = 0.5
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, 0, 0, 0)
 mesh = SubResource("CylinderMesh_vulik")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-visible = false
 mesh = SubResource("SphereMesh_pmnks")
-
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
-visible = false
-mesh = SubResource("SphereMesh_wqejx")
