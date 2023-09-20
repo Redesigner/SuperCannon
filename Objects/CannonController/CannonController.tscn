@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://bi6a330114ur0"]
+[gd_scene load_steps=7 format=3 uid="uid://bi6a330114ur0"]
 
 [ext_resource type="Script" path="res://Objects/CannonController/CannonController.gd" id="1_tam0s"]
 [ext_resource type="PackedScene" uid="uid://xo4o7eebd0mp" path="res://Objects/CannonParts/Wheels/CustomWheel.tscn" id="2_d7gy1"]
+[ext_resource type="PackedScene" uid="uid://bqolv27pto3n8" path="res://Objects/CannonParts/Cannons/BasicCannon.tscn" id="3_biyj7"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_fp2ls"]
 size = Vector3(1, 0.5, 2)
@@ -17,6 +18,8 @@ size = Vector3(1, 0.5, 2)
 mass = 100.0
 center_of_mass_mode = 1
 center_of_mass = Vector3(0, -1, 0)
+linear_damp = 1.0
+angular_damp = 1.0
 script = ExtResource("1_tam0s")
 maxVelocity = 100.0
 acceleration = 10.0
@@ -30,18 +33,22 @@ mesh = SubResource("BoxMesh_0bldu")
 
 [node name="CustomWheel" parent="." instance=ExtResource("2_d7gy1")]
 attachment_path = NodePath("..")
-transform = Transform3D(1, 0, -4.47035e-08, 0, 1, 0, 4.47035e-08, 0, 1, -0.5, -1, -1)
+transform = Transform3D(1, 0, -4.47035e-08, 0, 1, 0, 4.47035e-08, 0, 1, -0.5, -0.5, 1)
 
 [node name="CustomWheel2" parent="." instance=ExtResource("2_d7gy1")]
 attachment_path = NodePath("..")
-transform = Transform3D(1, 0, -4.47035e-08, 0, 1, 0, 4.47035e-08, 0, 1, 0.5, -1, -1)
+transform = Transform3D(1, 0, -4.47035e-08, 0, 1, 0, 4.47035e-08, 0, 1, 0.5, -0.5, 1)
 
 [node name="RightFrontWheel" parent="." instance=ExtResource("2_d7gy1")]
-max_turning_angle = 30.0
+max_turning_angle = 60.0
 attachment_path = NodePath("..")
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -1, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -0.5, -1)
 
 [node name="LeftFrontWheel" parent="." instance=ExtResource("2_d7gy1")]
-max_turning_angle = 30.0
+max_turning_angle = 60.0
 attachment_path = NodePath("..")
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -1, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.5, -1)
+
+[node name="BasicCannon" parent="." instance=ExtResource("3_biyj7")]
+attachment_path = NodePath("..")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)

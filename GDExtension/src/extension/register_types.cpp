@@ -8,8 +8,8 @@
 #include "../classes/cameras/follow_camera3d.h"
 
 #include "../classes/parts/part.h"
-
 #include "../classes/parts/wheels/wheel.h"
+#include "../classes/parts/cannons/cannon.h"
 
 using namespace godot;
 
@@ -21,8 +21,8 @@ void initialize_transhuman_module(ModuleInitializationLevel p_level) {
     ClassDB::register_class<FollowCamera3D>();
 
     ClassDB::register_class<Part>();
-
     ClassDB::register_class<Wheel>();
+    ClassDB::register_class<Cannon>();
 }
 
 void uninitialize_transhuman_module(ModuleInitializationLevel p_level) {

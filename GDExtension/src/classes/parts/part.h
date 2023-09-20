@@ -25,6 +25,10 @@ public:
 
     virtual void steer(float amount);
 
+    virtual void control(Vector2 input);
+
+    virtual void activate();
+
     virtual void _ready() override;
 
 protected:

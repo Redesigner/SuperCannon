@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://bqolv27pto3n8"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_p2w57"]
+size = Vector3(0.5, 0.25, 0.5)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_nk7hm"]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 1.0
+
+[node name="BasicCannon" type="Cannon"]
+pitch_speed = 10.0
+yaw_speed = 10.0
+barrel_path = NodePath("BaseMesh/Barrel")
+base_path = NodePath("BaseMesh")
+projectile_scene_path = "F:/Game Development/Godot/Projects/SuperCannon/Objects/Projectiles/TestProjectile.tscn"
+
+[node name="BaseMesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_p2w57")
+
+[node name="Barrel" type="Node3D" parent="BaseMesh"]
+
+[node name="BarrelMesh" type="MeshInstance3D" parent="BaseMesh/Barrel"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -0.5)
+mesh = SubResource("CylinderMesh_nk7hm")
+skeleton = NodePath("../../..")

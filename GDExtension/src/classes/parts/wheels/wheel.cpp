@@ -42,7 +42,7 @@ void Wheel::_bind_methods()
 
     BIND_PROPERTY(Variant::NODE_PATH, force_mesh_path, Wheel);
 
-    BIND_PROPERTY_HINT(Variant::FLOAT, friction_coeffecient, Wheel, PROPERTY_HINT_RANGE, "0, 1");
+    BIND_PROPERTY_HINT(Variant::FLOAT, friction_coeffecient, Wheel, PROPERTY_HINT_RANGE, "0, 10");
     BIND_PROPERTY_HINT(Variant::FLOAT, radius, Wheel, PROPERTY_HINT_NONE, "suffix:m");
 
     BIND_PROPERTY_HINT(Variant::FLOAT, max_suspension_length, Wheel, PROPERTY_HINT_NONE, "suffix:m");
@@ -115,25 +115,19 @@ void Wheel::steer(float amount)
     set_rotation_degrees(wheelRotationDegrees);
 }
 
-Vector3 Wheel::get_friction_force(double delta) const
+Vector3 Wheel::get_friction_force(double delta, float normal_force) const
 {
     const Vector3 xAxis = get_global_transform().basis.get_column(0);
 
-    const float mass = get_attachment()->get_mass() / 4.0f;
     const float velocityAlongDirection = xAxis.dot(_velocity);
-    const float restitutionForce = velocityAlongDirection * mass * _friction_coeffecient / delta; // How much force it would take to bring the object to a stop in one frame
+    const float restitutionForce = velocityAlongDirection * normal_force; // How much force it would take to bring the object to a stop in one frame
 
-    const float normalForceY = 9.8 * mass * _floor_normal.y;
-    const float frictionMagnitude = normalForceY * _friction_coeffecient;
+    const float frictionMagnitude = normal_force * _friction_coeffecient;
 
     // Get the one with the smallest magnitude -- frictionMagnitude is always positive
     const float finalFrictionMagnitude = Math::min(frictionMagnitude, Math::abs(restitutionForce));
 
     const Vector3 frictionForce = finalFrictionMagnitude * Math::sign(restitutionForce) * -xAxis;
-    
-    // UtilityFunctions::print( String("[Wheel] normal force: {3}, friction magnitude: {0}, velocity along direction {1}, total friction force {2}").format(Array::make(frictionMagnitude, restitutionForce, finalFrictionMagnitude, normalForceY)));
-
-    // use the opposite sign of our current velocity component
     return frictionForce;
 }
 
@@ -147,22 +141,18 @@ Vector3 Wheel::get_applied_torque_force() const
 }
 
 
-Vector3 Wheel::get_suspension_force(float suspension_compression) const
+float Wheel::get_suspension_force_magnitude(float suspension_compression) const
 {
     // Don't apply force if the suspension is fully extended
     if (suspension_compression <= 0.0f)
     {
-        return Vector3(0.0f, 0.0f, 0.0f);
+        return 0.0f;
     }
     
-    const float magnitude = suspension_compression * _spring_constant;
+    const float suspensionForceMagnitude = suspension_compression * _spring_constant;
+    const float dampingForceMagnitude = get_damping_force();
 
-    const Vector3 yAxis = get_global_transform().basis.get_column(1);
-
-    const Vector3 suspensionForce = yAxis * magnitude;
-    const Vector3 dampingForce = get_damping_force();
-
-    return suspensionForce + dampingForce;
+    return suspensionForceMagnitude + dampingForceMagnitude;
 }
 
 
@@ -182,9 +172,10 @@ Vector3 Wheel::get_total_forces(double delta)
 
     const Vector3 torqueForce = get_applied_torque_force();
 
-    const Vector3 suspensionForce = get_suspension_force(distanceToGround);
+    float suspensionForceMagnitude = get_suspension_force_magnitude(distanceToGround);
+    const Vector3 suspensionForce = suspensionForceMagnitude * basis.get_column(1);
 
-    const Vector3 frictionForce = get_friction_force(delta);
+    const Vector3 frictionForce = get_friction_force(delta, suspensionForceMagnitude);
 
     return torqueForce + suspensionForce + frictionForce;
 }
@@ -230,10 +221,7 @@ float Wheel::get_suspension_compression(bool &touching_ground_out)
 }
 
 
-Vector3 Wheel::get_damping_force() const
+float Wheel::get_damping_force() const
 {
-    const Vector3 yAxis = get_global_transform().basis.get_column(1);
-    const Vector3 dampingForce = _suspension_velocity * _damping * get_attachment()->get_mass() * -yAxis;
-
-    return dampingForce;
+    return _suspension_velocity * _damping * get_attachment()->get_mass() * -1.0f;
 }

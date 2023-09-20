@@ -57,15 +57,15 @@ shape = SubResource("ConvexPolygonShape3D_a0hgs")
 mesh = SubResource("PrismMesh_xr8l7")
 
 [node name="CannonController" parent="." instance=ExtResource("2_1xfsd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.68438, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mass = 40.0
 
 [node name="FollowCamera3D" type="FollowCamera3D" parent="."]
 target_path = NodePath("../CannonController")
 track_position = true
-position_offset = Vector3(0, 2, -5)
+position_offset = Vector3(0, 2, 5)
 track_rotation = true
-rotation_offset = Vector3(-15, 180, 5.2684e-14)
+rotation_offset = Vector3(-15, 0, 0)
 rotation_tracking_rate = 0.4
 current = true
 fov = 60.0

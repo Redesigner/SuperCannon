@@ -22,6 +22,8 @@ void Part::_bind_methods()
 
     ClassDB::bind_method(D_METHOD("power", "amount"), &Part::power);
     ClassDB::bind_method(D_METHOD("steer", "amount"), &Part::steer);
+    ClassDB::bind_method(D_METHOD("control", "input"), &Part::control);
+    ClassDB::bind_method(D_METHOD("activate"), &Part::activate);
 }
 
 void Part::_ready()
@@ -40,6 +42,14 @@ void Part::power(float amount)
 }
 
 void Part::steer(float amount)
+{
+}
+
+void Part::control(Vector2 input)
+{
+}
+
+void Part::activate()
 {
 }
 

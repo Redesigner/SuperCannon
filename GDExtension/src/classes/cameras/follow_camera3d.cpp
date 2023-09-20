@@ -98,6 +98,10 @@ void FollowCamera3D::_process(double delta)
         basis.set_quaternion(oldQuat.slerp(newQuat, _rotation_tracking_rate));
         transform.set_basis(basis);
         set_transform(transform);
+        
+        Vector3 rotation = get_global_rotation_degrees();
+        rotation.z = 0.0f;
+        set_global_rotation_degrees(rotation);
 
         calculatedOffset = targetBasis.get_quaternion().xform(calculatedOffset); 
     }

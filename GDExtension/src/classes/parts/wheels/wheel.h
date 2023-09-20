@@ -25,22 +25,26 @@ public:
     virtual void steer(float amount) override;
 
 private:
-    Vector3 get_friction_force(double delta) const;
+    Vector3 get_friction_force(double delta, float normal_force) const;
 
     Vector3 get_applied_torque_force() const;
 
-    Vector3 get_suspension_force(float distance_to_ground) const;
+    /// @param spring_compression How far the spring is being compressed, in m
+    /// @returns Magnitude of orce exerted by the suspension on the body it's attached to
+    float get_suspension_force_magnitude(float spring_compression) const;
 
+    /// @brief Get the sum of forces being applied by the wheel on the attachment body
+    /// @param delta Timestep, in s
+    /// @return Total forces, in N
     Vector3 get_total_forces(double delta);
 
-    // returns how far the suspension is compressed
-    // distance should be from
-    // touching_ground_out is false if the wheel is not touching the ground
-    // updates our floor normal
+    /// @brief Get the compression of the suspension spring, and update the floor normal
+    /// @returns How far the suspension is compressed (magnitude)
+    /// @param touching_ground_out set false if the wheel is not touching the ground
     float get_suspension_compression(bool &touching_ground_out);
 
     // get an approximation of the damping force at the wheel's location
-    Vector3 get_damping_force() const;
+    float get_damping_force() const;
 
 
     class MeshInstance3D *_wheel_mesh;
@@ -72,6 +76,7 @@ private:
     DECLARE_PROPERTY(float, max_turning_angle);
 
     // Current power of the wheel
+    // In a range [-1, 1], with negative being backwards
     DECLARE_PROPERTY(float, power);
 
     float _previous_distance_to_ground = 0.f;
