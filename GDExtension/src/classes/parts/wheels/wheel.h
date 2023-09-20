@@ -20,6 +20,10 @@ public:
 
     virtual void _physics_process(double delta) override;
 
+    virtual void power(float amount) override;
+
+    virtual void steer(float amount) override;
+
 private:
     Vector3 get_friction_force(double delta) const;
 
@@ -63,6 +67,12 @@ private:
 
     // The torque of the wheel, in Nm
     DECLARE_PROPERTY(float, torque);
+
+    // The furthest the wheel can turng, in degrees
+    DECLARE_PROPERTY(float, max_turning_angle);
+
+    // Current power of the wheel
+    DECLARE_PROPERTY(float, power);
 
     float _previous_distance_to_ground = 0.f;
 

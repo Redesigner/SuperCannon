@@ -22,6 +22,10 @@ Wheel::Wheel()
 
     _torque = 0.0f;
 
+    _max_turning_angle = 0.0f;
+
+    _power = 0.0f;
+
     _wheel_mesh = nullptr;
     _force_mesh = nullptr;
 }
@@ -46,6 +50,8 @@ void Wheel::_bind_methods()
     BIND_PROPERTY_HINT(Variant::FLOAT, damping, Wheel, PROPERTY_HINT_RANGE, "0, 1");
 
     BIND_PROPERTY_HINT(Variant::FLOAT, torque, Wheel, PROPERTY_HINT_RANGE, "0, 100000, 1, suffix:Nm");
+
+    BIND_PROPERTY_HINT(Variant::FLOAT, max_turning_angle, Wheel, PROPERTY_HINT_RANGE, "0, 90, suffix:°");
 }
 
 
@@ -96,16 +102,28 @@ void Wheel::_physics_process(double delta)
     attachment->apply_force(forces, get_global_position() - get_attachment()->get_global_position());
 }
 
+void Wheel::power(float amount)
+{
+    _power = Math::clamp(amount, -1.0f, 1.0f);
+}
+
+void Wheel::steer(float amount)
+{
+    // @todo: implement smoothing?
+    Vector3 wheelRotationDegrees = get_rotation_degrees();
+    wheelRotationDegrees.y = _max_turning_angle * amount;
+    set_rotation_degrees(wheelRotationDegrees);
+}
 
 Vector3 Wheel::get_friction_force(double delta) const
 {
     const Vector3 xAxis = get_global_transform().basis.get_column(0);
 
-    const float mass = get_attachment()->get_mass();
+    const float mass = get_attachment()->get_mass() / 4.0f;
     const float velocityAlongDirection = xAxis.dot(_velocity);
-    const float restitutionForce = velocityAlongDirection * mass; // How much force it would take to bring the object to a stop in one frame
+    const float restitutionForce = velocityAlongDirection * mass * _friction_coeffecient / delta; // How much force it would take to bring the object to a stop in one frame
 
-    const float normalForceY = 9.8 * mass /* _floor_normal.y */;
+    const float normalForceY = 9.8 * mass * _floor_normal.y;
     const float frictionMagnitude = normalForceY * _friction_coeffecient;
 
     // Get the one with the smallest magnitude -- frictionMagnitude is always positive
@@ -125,7 +143,7 @@ Vector3 Wheel::get_applied_torque_force() const
     // apply torque along the local z axis
     // use get_column to get the mat3 transform column
     const float magnitude = _torque / _radius;
-    return get_global_transform().basis.get_column(2) * magnitude;
+    return get_global_transform().basis.get_column(2) * magnitude * _power;
 }
 
 

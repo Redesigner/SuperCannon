@@ -1,0 +1,14 @@
+{
+    "files.associations": {
+        "set": "cpp",
+        "unordered_map": "cpp",
+        "xhash": "cpp",
+        "xtree": "cpp",
+        "algorithm": "cpp",
+        "optional": "cpp",
+        "system_error": "cpp",
+        "type_traits": "cpp",
+        "xtr1common": "cpp",
+        "xutility": "cpp"
+    }
+}

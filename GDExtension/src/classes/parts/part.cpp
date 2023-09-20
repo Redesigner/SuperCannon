@@ -19,6 +19,9 @@ Part::~Part()
 void Part::_bind_methods()
 {
     BIND_PROPERTY(Variant::NODE_PATH, attachment_path, Part);
+
+    ClassDB::bind_method(D_METHOD("power", "amount"), &Part::power);
+    ClassDB::bind_method(D_METHOD("steer", "amount"), &Part::steer);
 }
 
 void Part::_ready()
@@ -33,6 +36,10 @@ void Part::_ready()
 }
 
 void Part::power(float amount)
+{
+}
+
+void Part::steer(float amount)
 {
 }
 

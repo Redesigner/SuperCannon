@@ -23,6 +23,8 @@ protected:
 public:
     virtual void power(float amount);
 
+    virtual void steer(float amount);
+
     virtual void _ready() override;
 
 protected:

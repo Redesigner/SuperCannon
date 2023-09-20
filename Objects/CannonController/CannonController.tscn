@@ -21,22 +21,12 @@ script = ExtResource("1_tam0s")
 maxVelocity = 100.0
 acceleration = 10.0
 brakingRate = 50.0
-turnSpeed = 30.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_fp2ls")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_0bldu")
-
-[node name="SpringArm3D" type="SpringArm3D" parent="."]
-transform = Transform3D(-1, 4.37114e-08, -7.57103e-08, 0, 0.866025, 0.5, 8.74228e-08, 0.5, -0.866025, 0, 0, 0)
-collision_mask = 0
-spring_length = 7.0
-
-[node name="Camera3D" type="Camera3D" parent="SpringArm3D"]
-current = true
-fov = 60.0
 
 [node name="CustomWheel" parent="." instance=ExtResource("2_d7gy1")]
 attachment_path = NodePath("..")
@@ -47,9 +37,11 @@ attachment_path = NodePath("..")
 transform = Transform3D(1, 0, -4.47035e-08, 0, 1, 0, 4.47035e-08, 0, 1, 0.5, -1, -1)
 
 [node name="RightFrontWheel" parent="." instance=ExtResource("2_d7gy1")]
+max_turning_angle = 30.0
 attachment_path = NodePath("..")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -1, 1)
 
 [node name="LeftFrontWheel" parent="." instance=ExtResource("2_d7gy1")]
+max_turning_angle = 30.0
 attachment_path = NodePath("..")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -1, 1)

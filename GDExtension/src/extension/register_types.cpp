@@ -5,6 +5,8 @@
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/godot.hpp>
 
+#include "../classes/cameras/follow_camera3d.h"
+
 #include "../classes/parts/part.h"
 
 #include "../classes/parts/wheels/wheel.h"
@@ -15,6 +17,8 @@ void initialize_transhuman_module(ModuleInitializationLevel p_level) {
     if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
         return;
     }
+
+    ClassDB::register_class<FollowCamera3D>();
 
     ClassDB::register_class<Part>();
 

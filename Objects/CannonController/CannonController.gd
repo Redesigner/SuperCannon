@@ -3,7 +3,6 @@ extends VehicleBody3D
 @export var maxVelocity: float
 @export var acceleration: float
 @export var brakingRate: float
-@export var turnSpeed: float
 
 var wheels: Array
 
@@ -39,11 +38,11 @@ func apply_throttle_and_brakes(_delta):
 	
 	set_engine_force((throttle - brakeRate) * acceleration)
 	for wheel in wheels:
-		wheel.set_torque((throttle - brakeRate) * acceleration)
+		wheel.power(throttle - brakeRate)
 
 func turn(_delta):	
 	var turningDirection: float = Input.get_axis("turn_left", "turn_right")
 	steering = lerp(steering, -turningDirection, .2)
 	
-	left_wheel.rotation_degrees.y = -turningDirection * turnSpeed
-	right_wheel.rotation_degrees.y = -turningDirection * turnSpeed
+	left_wheel.steer(-turningDirection)
+	right_wheel.steer(-turningDirection)

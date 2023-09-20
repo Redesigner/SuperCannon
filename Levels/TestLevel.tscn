@@ -1,8 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://bx2nlku8mjerv"]
+[gd_scene load_steps=10 format=3 uid="uid://bx2nlku8mjerv"]
 
 [ext_resource type="Material" uid="uid://pn71uf1lemce" path="res://Assets/Materials/grid.material" id="1_ic85h"]
 [ext_resource type="PackedScene" uid="uid://bi6a330114ur0" path="res://Objects/CannonController/CannonController.tscn" id="2_1xfsd"]
-[ext_resource type="Script" path="res://Levels/FollowCamera.gd" id="3_1nuee"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_8bmkd"]
 
@@ -58,10 +57,15 @@ shape = SubResource("ConvexPolygonShape3D_a0hgs")
 mesh = SubResource("PrismMesh_xr8l7")
 
 [node name="CannonController" parent="." instance=ExtResource("2_1xfsd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.68438, 17)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.68438, 0)
 mass = 40.0
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1.19209e-07, 0.258819, -0.965926, -4.11659e-09, 0.965926, 0.258819, 1, -2.68772e-08, 1.16213e-07, -6, 4, 0)
-fov = 45.0
-script = ExtResource("3_1nuee")
+[node name="FollowCamera3D" type="FollowCamera3D" parent="."]
+target_path = NodePath("../CannonController")
+track_position = true
+position_offset = Vector3(0, 2, -5)
+track_rotation = true
+rotation_offset = Vector3(-15, 180, 5.2684e-14)
+rotation_tracking_rate = 0.4
+current = true
+fov = 60.0
