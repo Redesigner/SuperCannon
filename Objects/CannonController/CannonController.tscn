@@ -17,7 +17,7 @@ size = Vector3(1, 0.5, 2)
 [node name="CannonController" type="VehicleBody3D"]
 mass = 100.0
 center_of_mass_mode = 1
-center_of_mass = Vector3(0, -1, 0)
+center_of_mass = Vector3(0, -0.5, 0)
 linear_damp = 1.0
 angular_damp = 1.0
 script = ExtResource("1_tam0s")

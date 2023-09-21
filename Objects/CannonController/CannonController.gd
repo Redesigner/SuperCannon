@@ -53,6 +53,5 @@ func turn(_delta):
 	
 func control(_delta):
 	var input: Vector2 = Input.get_vector("control_right", "control_left", "control_down", "control_up")
-	print(input)
 	for part in parts:
 		part.control(input);

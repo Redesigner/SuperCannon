@@ -27,7 +27,7 @@ public:
 private:
     Vector3 get_friction_force(double delta, float normal_force) const;
 
-    Vector3 get_applied_torque_force() const;
+    float get_applied_torque_force_magnitude() const;
 
     /// @param spring_compression How far the spring is being compressed, in m
     /// @returns Magnitude of orce exerted by the suspension on the body it's attached to
@@ -82,6 +82,8 @@ private:
     float _previous_distance_to_ground = 0.f;
 
     float _suspension_velocity = 0.f;
+
+    float _rotational_velocity = 0.f;
 
     Vector3 _previous_position = Vector3(0.0f, 0.0f, 0.0f);
 

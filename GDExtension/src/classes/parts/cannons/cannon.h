@@ -26,6 +26,9 @@ public:
 
 private:
     DECLARE_PROPERTY(float, pitch_speed);
+    DECLARE_PROPERTY(float, max_pitch);
+    DECLARE_PROPERTY(float, min_pitch);
+
     DECLARE_PROPERTY(float, yaw_speed);
 
     Vector2 _control_input;

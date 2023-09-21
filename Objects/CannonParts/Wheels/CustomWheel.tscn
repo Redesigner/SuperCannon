@@ -1,6 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://xo4o7eebd0mp"]
+[gd_scene load_steps=6 format=3 uid="uid://xo4o7eebd0mp"]
+
+[ext_resource type="Texture2D" uid="uid://b5hybast1uk84" path="res://Assets/Textures/Grid.png" id="1_k5iib"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_estdc"]
+albedo_texture = ExtResource("1_k5iib")
+uv1_scale = Vector3(2, 2, 2)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_vulik"]
+material = SubResource("StandardMaterial3D_estdc")
 top_radius = 0.3
 bottom_radius = 0.3
 height = 0.1
@@ -20,7 +27,7 @@ force_mesh_path = NodePath("MeshInstance3D2")
 friction_coeffecient = 1.0
 radius = 0.3
 max_suspension_length = 1.5
-spring_constant = 2500.0
+spring_constant = 500.0
 damping = 0.5
 torque = 20.0
 

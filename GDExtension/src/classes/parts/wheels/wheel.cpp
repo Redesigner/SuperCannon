@@ -100,12 +100,22 @@ void Wheel::_physics_process(double delta)
         _force_mesh->set_global_position(_wheel_mesh->get_global_position() + forces * 0.01f);
     }
     attachment->apply_force(forces, get_global_position() - get_attachment()->get_global_position());
+
+
+    const float velocityAlongZ = get_global_transform().get_basis().get_column(2).dot(_velocity);
+    _rotational_velocity = velocityAlongZ / _radius;
+
+    Quaternion wheelRotation = _wheel_mesh->get_rotation();
+    wheelRotation *= Quaternion(Vector3(0.0f, _rotational_velocity * delta, 0.0f));
+    _wheel_mesh->set_quaternion(wheelRotation);
 }
+
 
 void Wheel::power(float amount)
 {
     _power = Math::clamp(amount, -1.0f, 1.0f);
 }
+
 
 void Wheel::steer(float amount)
 {
@@ -114,6 +124,7 @@ void Wheel::steer(float amount)
     wheelRotationDegrees.y = _max_turning_angle * amount;
     set_rotation_degrees(wheelRotationDegrees);
 }
+
 
 Vector3 Wheel::get_friction_force(double delta, float normal_force) const
 {
@@ -132,12 +143,12 @@ Vector3 Wheel::get_friction_force(double delta, float normal_force) const
 }
 
 
-Vector3 Wheel::get_applied_torque_force() const
+float Wheel::get_applied_torque_force_magnitude() const
 {
     // apply torque along the local z axis
     // use get_column to get the mat3 transform column
     const float magnitude = _torque / _radius;
-    return get_global_transform().basis.get_column(2) * magnitude * _power;
+    return magnitude * _power;
 }
 
 
@@ -170,9 +181,10 @@ Vector3 Wheel::get_total_forces(double delta)
 
     Basis basis = get_global_transform().basis;
 
-    const Vector3 torqueForce = get_applied_torque_force();
+    const float torqueForceMagnitude = get_applied_torque_force_magnitude();
+    const Vector3 torqueForce = torqueForceMagnitude * basis.get_column(2);
 
-    float suspensionForceMagnitude = get_suspension_force_magnitude(distanceToGround);
+    const float suspensionForceMagnitude = get_suspension_force_magnitude(distanceToGround);
     const Vector3 suspensionForce = suspensionForceMagnitude * basis.get_column(1);
 
     const Vector3 frictionForce = get_friction_force(delta, suspensionForceMagnitude);

@@ -12,6 +12,9 @@ using namespace godot;
 Cannon::Cannon()
 {
     _pitch_speed = 0.0f;
+    _min_pitch = 0.0f;
+    _max_pitch = 90.0f;
+    
     _yaw_speed = 0.0f;
 
     _control_input = Vector2();
@@ -24,6 +27,9 @@ Cannon::~Cannon()
 void Cannon::_bind_methods()
 {
     BIND_PROPERTY_HINT(Variant::FLOAT, pitch_speed, Cannon, PROPERTY_HINT_RANGE, "0, 720, suffix:deg/s");
+    BIND_PROPERTY_HINT(Variant::FLOAT, max_pitch, Cannon, PROPERTY_HINT_RANGE, "-90, 90, suffix:deg");
+    BIND_PROPERTY_HINT(Variant::FLOAT, min_pitch, Cannon, PROPERTY_HINT_RANGE, "-90, 90, suffix:deg");
+
     BIND_PROPERTY_HINT(Variant::FLOAT, yaw_speed, Cannon, PROPERTY_HINT_RANGE, "0, 720, suffix:deg/s");
 
     BIND_PROPERTY(Variant::NODE_PATH, barrel_path, Cannon);
@@ -63,7 +69,7 @@ void Cannon::_physics_process(double delta)
 
     Vector3 barrelRotation = _barrel->get_rotation_degrees();
     barrelRotation.x += _control_input.y * _pitch_speed * delta;
-    barrelRotation.x = Math::min(barrelRotation.x, 90.0f);
+    barrelRotation.x = Math::clamp(barrelRotation.x, _min_pitch, _max_pitch);
     _barrel->set_rotation_degrees(barrelRotation);
 
     Vector3 baseRotation = _base->get_rotation_degrees();
@@ -78,9 +84,7 @@ void Cannon::control(Vector2 input)
 
 void Cannon::activate()
 {
-    // UtilityFunctions::print("[Cannon] cannon fired");
     Node3D *projectile = Object::cast_to<Node3D>(_projectile_scene->instantiate());
     get_tree()->get_current_scene()->add_child(projectile);
     projectile->set_global_transform(_barrel->get_global_transform());
-    // UtilityFunctions::print( String("[Cannon] projectile location").format(Array::make(projectile->get_global_position() )) );
 }
