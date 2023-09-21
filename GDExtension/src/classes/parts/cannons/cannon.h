@@ -31,6 +31,8 @@ private:
 
     DECLARE_PROPERTY(float, yaw_speed);
 
+    DECLARE_PROPERTY(float, projectile_velocity);
+
     Vector2 _control_input;
 
     Node3D *_barrel = nullptr;

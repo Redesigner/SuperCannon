@@ -5,12 +5,12 @@
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_8bmkd"]
 
-[sub_resource type="Sky" id="Sky_thtib"]
+[sub_resource type="Sky" id="Sky_mysur"]
 sky_material = SubResource("PhysicalSkyMaterial_8bmkd")
 
 [sub_resource type="Environment" id="Environment_v4rr7"]
 background_mode = 2
-sky = SubResource("Sky_thtib")
+sky = SubResource("Sky_mysur")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ajvw0"]
 size = Vector3(100, 0.1, 100)

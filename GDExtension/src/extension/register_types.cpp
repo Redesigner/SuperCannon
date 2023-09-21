@@ -11,6 +11,8 @@
 #include "../classes/parts/wheels/wheel.h"
 #include "../classes/parts/cannons/cannon.h"
 
+#include "../classes/projectiles/projectile.h"
+
 using namespace godot;
 
 void initialize_transhuman_module(ModuleInitializationLevel p_level) {
@@ -23,6 +25,8 @@ void initialize_transhuman_module(ModuleInitializationLevel p_level) {
     ClassDB::register_class<Part>();
     ClassDB::register_class<Wheel>();
     ClassDB::register_class<Cannon>();
+
+    ClassDB::register_class<Projectile>();
 }
 
 void uninitialize_transhuman_module(ModuleInitializationLevel p_level) {

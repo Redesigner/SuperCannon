@@ -1,0 +1,125 @@
+[gd_scene load_steps=13 format=3 uid="uid://cdw6bahffj642"]
+
+[ext_resource type="Material" uid="uid://pn71uf1lemce" path="res://Assets/Materials/grid.material" id="1_brp4u"]
+[ext_resource type="PackedScene" uid="uid://bi6a330114ur0" path="res://Objects/CannonController/CannonController.tscn" id="2_id3ux"]
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_l20lx"]
+
+[sub_resource type="Sky" id="Sky_thtib"]
+sky_material = SubResource("PhysicalSkyMaterial_l20lx")
+
+[sub_resource type="Environment" id="Environment_4twqy"]
+background_mode = 2
+sky = SubResource("Sky_thtib")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_ult8w"]
+viewport_path = NodePath("SideViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_chn37"]
+viewport_path = NodePath("FrontViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_r2y3o"]
+viewport_path = NodePath("ThirdPersonViewport")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0030b"]
+size = Vector3(100, 0.1, 100)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_h5sgg"]
+material = ExtResource("1_brp4u")
+size = Vector2(100, 100)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vh56q"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_sdoaa"]
+
+[node name="RecordingMap" type="Node3D"]
+
+[node name="Environment" type="Node" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
+transform = Transform3D(-0.901221, -0.370891, -0.224144, -0.433013, 0.75, 0.499999, -0.0173371, 0.547667, -0.836517, 0, 4.45933, 0)
+light_energy = 2.0
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
+environment = SubResource("Environment_4twqy")
+
+[node name="RenderSurfaceContainer" type="GridContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 392.0
+offset_bottom = -136.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 3
+
+[node name="SideCameraRender" type="TextureRect" parent="RenderSurfaceContainer"]
+layout_mode = 2
+texture = SubResource("ViewportTexture_ult8w")
+expand_mode = 3
+
+[node name="FrontCameraRender" type="TextureRect" parent="RenderSurfaceContainer"]
+layout_mode = 2
+texture = SubResource("ViewportTexture_chn37")
+expand_mode = 3
+
+[node name="ThirdPersonCameraRender" type="TextureRect" parent="RenderSurfaceContainer"]
+layout_mode = 2
+texture = SubResource("ViewportTexture_r2y3o")
+stretch_mode = 3
+
+[node name="CannonController" parent="." instance=ExtResource("2_id3ux")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mass = 40.0
+
+[node name="SideViewport" type="SubViewport" parent="."]
+
+[node name="FollowCamera3D" type="FollowCamera3D" parent="SideViewport"]
+target_path = NodePath("../../CannonController")
+track_position = true
+position_offset = Vector3(-10, 0.5, 0)
+rotation_offset = Vector3(0, 90, 0)
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -7, 1.5, 0)
+fov = 30.0
+
+[node name="FrontViewport" type="SubViewport" parent="."]
+
+[node name="FollowCamera3D" type="FollowCamera3D" parent="FrontViewport"]
+target_path = NodePath("../../CannonController")
+track_position = true
+position_offset = Vector3(0, 0.5, -10)
+rotation_offset = Vector3(0, 180, 0)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1, -5)
+fov = 30.0
+
+[node name="ThirdPersonViewport" type="SubViewport" parent="."]
+
+[node name="FollowCamera3D" type="FollowCamera3D" parent="ThirdPersonViewport"]
+target_path = NodePath("../../CannonController")
+track_position = true
+position_offset = Vector3(0, 2, 3)
+track_rotation = true
+rotation_offset = Vector3(-15, 0, 0)
+rotation_tracking_rate = 0.25
+
+[node name="Floor" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
+shape = SubResource("BoxShape3D_0030b")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("PlaneMesh_h5sgg")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(0.258819, 0.965926, 0, -0.965926, 0.258819, 0, 0, 0, 1, 0, -0.25, -6)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("CapsuleShape3D_vh56q")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(1, -8.9407e-08, 0, 8.9407e-08, 1, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_sdoaa")

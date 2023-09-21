@@ -7,6 +7,8 @@
 
 #include <godot_cpp/variant/utility_functions.hpp>
 
+#include "../../projectiles/projectile.h"
+
 using namespace godot;
 
 Cannon::Cannon()
@@ -14,7 +16,7 @@ Cannon::Cannon()
     _pitch_speed = 0.0f;
     _min_pitch = 0.0f;
     _max_pitch = 90.0f;
-    
+
     _yaw_speed = 0.0f;
 
     _control_input = Vector2();
@@ -31,6 +33,8 @@ void Cannon::_bind_methods()
     BIND_PROPERTY_HINT(Variant::FLOAT, min_pitch, Cannon, PROPERTY_HINT_RANGE, "-90, 90, suffix:deg");
 
     BIND_PROPERTY_HINT(Variant::FLOAT, yaw_speed, Cannon, PROPERTY_HINT_RANGE, "0, 720, suffix:deg/s");
+
+    BIND_PROPERTY_HINT(Variant::FLOAT, projectile_velocity, Cannon, PROPERTY_HINT_RANGE, "0, 10000, suffix:m/s");
 
     BIND_PROPERTY(Variant::NODE_PATH, barrel_path, Cannon);
     BIND_PROPERTY(Variant::NODE_PATH, base_path, Cannon);
@@ -84,7 +88,13 @@ void Cannon::control(Vector2 input)
 
 void Cannon::activate()
 {
-    Node3D *projectile = Object::cast_to<Node3D>(_projectile_scene->instantiate());
+    Projectile *projectile = Object::cast_to<Projectile>(_projectile_scene->instantiate());
     get_tree()->get_current_scene()->add_child(projectile);
     projectile->set_global_transform(_barrel->get_global_transform());
+
+    const Vector3 projectileFireDirection = _barrel->get_transform().get_basis().get_column(0);
+    projectile->set_linear_velocity(projectileFireDirection * _projectile_velocity);
+
+    const float projectileMomentum = _projectile_velocity * projectile->get_mass();
+    get_attachment()->apply_impulse(projectileMomentum / get_attachment()->get_mass() * -projectileFireDirection);
 }
