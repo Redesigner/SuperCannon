@@ -92,9 +92,10 @@ void Cannon::activate()
     get_tree()->get_current_scene()->add_child(projectile);
     projectile->set_global_transform(_barrel->get_global_transform());
 
-    const Vector3 projectileFireDirection = _barrel->get_transform().get_basis().get_column(0);
+    const Vector3 projectileFireDirection = -_barrel->get_global_transform().get_basis().get_column(2);
     projectile->set_linear_velocity(projectileFireDirection * _projectile_velocity);
 
     const float projectileMomentum = _projectile_velocity * projectile->get_mass();
-    get_attachment()->apply_impulse(projectileMomentum / get_attachment()->get_mass() * -projectileFireDirection);
+    Vector3 attachmentCenterOfMass = get_attachment()->get_global_position() + get_attachment()->get_quaternion().xform(get_attachment()->get_center_of_mass());
+    get_attachment()->apply_impulse(projectileMomentum / get_attachment()->get_mass() * -projectileFireDirection, get_global_position() - attachmentCenterOfMass);
 }

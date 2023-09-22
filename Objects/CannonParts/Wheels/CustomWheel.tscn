@@ -28,7 +28,7 @@ friction_coeffecient = 1.0
 radius = 0.3
 max_suspension_length = 1.5
 spring_constant = 500.0
-damping = 0.5
+damping = 0.8
 torque = 20.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]

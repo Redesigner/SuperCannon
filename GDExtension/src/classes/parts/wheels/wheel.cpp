@@ -99,7 +99,9 @@ void Wheel::_physics_process(double delta)
     {
         _force_mesh->set_global_position(_wheel_mesh->get_global_position() + forces * 0.01f);
     }
-    attachment->apply_force(forces, get_global_position() - get_attachment()->get_global_position());
+    // Jolt physics seems to apply forces relative to the center of mass, so we calculate it here
+    Vector3 attachmentCenterOfMass = get_attachment()->get_global_position() + get_attachment()->get_quaternion().xform(get_attachment()->get_center_of_mass());
+    attachment->apply_force(forces, get_global_position() - attachmentCenterOfMass);
 
 
     const float velocityAlongZ = get_global_transform().get_basis().get_column(2).dot(_velocity);

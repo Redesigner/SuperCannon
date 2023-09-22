@@ -1,13 +1,17 @@
 [gd_scene load_steps=3 format=3 uid="uid://dem264qinsed4"]
 
-[ext_resource type="Script" path="res://Objects/Projectiles/TestProjectile.gd" id="1_eyoq4"]
-
 [sub_resource type="SphereMesh" id="SphereMesh_a71c5"]
 radius = 0.2
 height = 0.4
 
-[node name="TestProjectile" type="Node3D"]
-script = ExtResource("1_eyoq4")
+[sub_resource type="SphereShape3D" id="SphereShape3D_20bdx"]
+radius = 0.2
+
+[node name="TestProjectile" type="Projectile"]
+mass = 10.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_a71c5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_20bdx")

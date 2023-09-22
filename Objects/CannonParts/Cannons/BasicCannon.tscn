@@ -9,8 +9,9 @@ bottom_radius = 0.1
 height = 1.0
 
 [node name="BasicCannon" type="Cannon"]
-pitch_speed = 10.0
-yaw_speed = 10.0
+pitch_speed = 45.0
+yaw_speed = 45.0
+projectile_velocity = 50.0
 barrel_path = NodePath("BaseMesh/Barrel")
 base_path = NodePath("BaseMesh")
 projectile_scene_path = "F:/Game Development/Godot/Projects/SuperCannon/Objects/Projectiles/TestProjectile.tscn"
