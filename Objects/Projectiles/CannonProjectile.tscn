@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://cx7d0s4couask"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_5b3hd"]
+radius = 0.2
+height = 0.4
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_5mpe7"]
+radius = 0.2
+
+[node name="CannonProjectile" type="CannonSpawnerProjectile"]
+cannon_scene_path = "res://Objects/CannonParts/Cannons/BasicCannon.tscn"
+mass = 25.0
+continuous_cd = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_5b3hd")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_5mpe7")

@@ -12,6 +12,7 @@
 #include "../classes/parts/cannons/cannon.h"
 
 #include "../classes/projectiles/projectile.h"
+#include "../classes/projectiles/cannon_spawner_projectile.h"
 
 using namespace godot;
 
@@ -27,6 +28,7 @@ void initialize_transhuman_module(ModuleInitializationLevel p_level) {
     ClassDB::register_class<Cannon>();
 
     ClassDB::register_class<Projectile>();
+    ClassDB::register_class<CannonSpawnerProjectile>();
 }
 
 void uninitialize_transhuman_module(ModuleInitializationLevel p_level) {

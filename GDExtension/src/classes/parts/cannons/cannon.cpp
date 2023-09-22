@@ -39,7 +39,7 @@ void Cannon::_bind_methods()
     BIND_PROPERTY(Variant::NODE_PATH, barrel_path, Cannon);
     BIND_PROPERTY(Variant::NODE_PATH, base_path, Cannon);
 
-    BIND_PROPERTY_HINT(Variant::STRING, projectile_scene_path, Cannon, PROPERTY_HINT_GLOBAL_FILE, "");
+    BIND_PROPERTY_HINT(Variant::STRING, projectile_scene_path, Cannon, PROPERTY_HINT_FILE, "");
 }
 
 
