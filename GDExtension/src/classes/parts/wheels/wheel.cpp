@@ -102,11 +102,14 @@ void Wheel::_physics_process(double delta)
         _force_mesh->set_global_position(_wheel_mesh->get_global_position() + forces * 0.01f);
     }
     // Jolt physics seems to apply forces relative to the center of mass, so we calculate it here
-    Vector3 attachmentCenterOfMass = get_attachment()->get_global_position() + get_attachment()->get_quaternion().xform(get_attachment()->get_center_of_mass());
+    const Transform3D attachmentTransform = get_attachment()->get_global_transform();
+    const Basis attachmentBasis = attachmentTransform.get_basis();
+    const Vector3 attachmentPosition = get_attachment()->get_global_position();
+    Vector3 attachmentCenterOfMass = attachmentPosition + attachmentBasis.get_quaternion().xform(get_attachment()->get_center_of_mass());
     attachment->apply_force(forces, get_global_position() - attachmentCenterOfMass);
 
-
-    const float velocityAlongZ = get_global_transform().get_basis().get_column(2).dot(_velocity);
+    // Update the rotation of the mesh
+    const float velocityAlongZ = attachmentBasis.get_column(2).dot(_velocity);
     _rotational_velocity = velocityAlongZ / _radius;
 
     Quaternion wheelRotation = _wheel_mesh->get_rotation();
