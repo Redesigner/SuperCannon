@@ -2,7 +2,8 @@
 
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/input.hpp>
-#include <godot_cpp/classes/input_event.hpp>
+
+#include <godot_cpp/variant/utility_functions.hpp>
 
 #include "../body/cannon_body.h"
 
@@ -10,6 +11,7 @@ using namespace godot;
 
 Controller::Controller()
 {
+    _control_stack = std::stack<CannonBody *>();
 }
 
 
@@ -20,6 +22,7 @@ Controller::~Controller()
 
 void Controller::_bind_methods()
 {
+    BIND_PROPERTY(Variant::NODE_PATH, cannon_body_path, Controller);
 }
 
 
@@ -29,7 +32,17 @@ void Controller::_ready()
     {
         return;
     }
+
+    CannonBody *body = Object::cast_to<CannonBody>(get_node_or_null(_cannon_body_path));
+    if (!body)
+    {
+        WARN_PRINT("Cannon Body found at path not valid.");
+        return;
+    }
+
+    take_control(body);
 }
+
 
 void Controller::_input(const Ref<InputEvent> &event)
 {
@@ -60,17 +73,34 @@ void Controller::_physics_process(double delta)
     update_local_inputs();
 }
 
+
+void Controller::take_control(CannonBody *pawn)
+{
+    if (!pawn)
+    {
+        return;
+    }
+    _control_stack.push(pawn);
+}
+
+
 void Controller::update_local_inputs()
 {
     if (_control_stack.empty())
     {
         return;
     }
-
     CannonBody *cannonBody = _control_stack.top();
+
+    if (!cannonBody)
+    {
+        _control_stack.pop();
+        WARN_PRINT("Controller has a cannon set, but it is null. Did the cannon get deleted?");
+        return;
+    }
     Input *input = Input::get_singleton();
 
-    cannonBody->power(input->get_axis("brake", "throttle"));
+    cannonBody->power(-input->get_axis("brake", "throttle"));
     cannonBody->steer(input->get_axis("turn_left", "turn_right"));
     cannonBody->control(input->get_vector("control_right", "control_left", "control_down", "control_up"));
 }

@@ -17,7 +17,11 @@ env.Append(CPPPATH=["src/"])
 sources =  Glob("src/*.cpp")
 sources += Glob("src/extension/*.cpp")
 
+sources += Glob("src/classes/body/*.cpp")
+
 sources += Glob("src/classes/cameras/*.cpp")
+
+sources += Glob("src/classes/controller/*.cpp")
 
 sources += Glob("src/classes/parts/*.cpp")
 sources += Glob("src/classes/parts/wheels/*.cpp")

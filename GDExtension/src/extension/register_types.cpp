@@ -5,7 +5,11 @@
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/godot.hpp>
 
+#include "../classes/body/cannon_body.h"
+
 #include "../classes/cameras/follow_camera3d.h"
+
+#include "../classes/controller/controller.h"
 
 #include "../classes/parts/part.h"
 #include "../classes/parts/wheels/wheel.h"
@@ -21,7 +25,11 @@ void initialize_transhuman_module(ModuleInitializationLevel p_level) {
         return;
     }
 
+    ClassDB::register_class<CannonBody>();
+
     ClassDB::register_class<FollowCamera3D>();
+
+    ClassDB::register_class<Controller>();
 
     ClassDB::register_class<Part>();
     ClassDB::register_class<Wheel>();

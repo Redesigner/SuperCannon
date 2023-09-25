@@ -2,10 +2,11 @@
 
 #include <godot_cpp/classes/rigid_body3d.hpp>
 
-#include <vector.hpp>
+#include <vector>
 
 namespace godot
 {
+class Part;
 class CannonBody : public RigidBody3D
 {
     GDCLASS(CannonBody, RigidBody3D);
@@ -28,7 +29,11 @@ public:
 
     void activate();
 
+protected:
+    void _notification(int p_what);
+
 private:
-    
+    // use ref counted instead of pointer?
+    std::vector<Part *> _attached_parts;
 };
 }

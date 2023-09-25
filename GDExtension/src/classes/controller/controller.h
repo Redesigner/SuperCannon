@@ -1,6 +1,8 @@
 #pragma once
 
-#include <godot_cpp/classes/node.hpp>
+#include <godot_cpp/classes/node3d.hpp>
+
+#include <godot_cpp/classes/input_event.hpp>
 
 #include <stack>
 
@@ -9,9 +11,12 @@
 namespace godot
 {
 class CannonBody;
-class Controller : public Node
+class InputEvent;
+
+// this has to extend node3d so we can place it in the world properly
+class Controller : public Node3D
 {
-    GDCLASS(Controller, Node);
+    GDCLASS(Controller, Node3D);
 
 public:
     Controller();
@@ -27,8 +32,12 @@ public:
 
     virtual void _physics_process(double delta) override;
 
+    void take_control(CannonBody *pawn);
+
 private:
     void update_local_inputs();
+
+    DECLARE_PROPERTY(NodePath, cannon_body_path);
 
     std::stack<CannonBody *> _control_stack;
 
