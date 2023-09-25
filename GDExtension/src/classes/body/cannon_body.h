@@ -20,6 +20,14 @@ protected:
 public:
     virtual void _ready() override;
 
+    void power(float input);
+
+    void steer(float input);
+
+    void control(Vector2 input);
+
+    void activate();
+
 private:
     
 };

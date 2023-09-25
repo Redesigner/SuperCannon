@@ -1,8 +1,10 @@
 #pragma once
 
+#include <godot_cpp/classes/node.hpp>
+
 #include <stack>
 
-#include <godot_cpp/classes/node.hpp>
+#include "../../macros/class_macros.h"
 
 namespace godot
 {
@@ -21,7 +23,14 @@ protected:
 public:
     virtual void _ready() override;
 
+    virtual void _input(const Ref<InputEvent> &event) override;
+
+    virtual void _physics_process(double delta) override;
+
 private:
+    void update_local_inputs();
+
     std::stack<CannonBody *> _control_stack;
+
 };
 }
