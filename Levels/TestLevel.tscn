@@ -57,3 +57,4 @@ shape = SubResource("ConvexPolygonShape3D_a0hgs")
 mesh = SubResource("PrismMesh_xr8l7")
 
 [node name="Controller" parent="." instance=ExtResource("2_kpf6q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)

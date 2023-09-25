@@ -21,6 +21,8 @@ protected:
 public:
     virtual void _ready() override;
 
+    virtual void _physics_process(double delta) override;
+
     void power(float input);
 
     void steer(float input);
@@ -35,5 +37,7 @@ protected:
 private:
     // use ref counted instead of pointer?
     std::vector<Part *> _attached_parts;
+
+    Transform3D _spawn_transform;
 };
 }

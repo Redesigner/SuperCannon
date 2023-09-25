@@ -93,7 +93,7 @@ void Cannon::activate()
     projectile->set_global_transform(_barrel->get_global_transform());
 
     const Vector3 projectileFireDirection = -_barrel->get_global_transform().get_basis().get_column(2);
-    projectile->set_linear_velocity(projectileFireDirection * _projectile_velocity);
+    projectile->set_linear_velocity(projectileFireDirection * _projectile_velocity + get_attachment()->get_linear_velocity());
 
     const float projectileMomentum = _projectile_velocity * projectile->get_mass();
     Vector3 attachmentCenterOfMass = get_attachment()->get_global_position() + get_attachment()->get_quaternion().xform(get_attachment()->get_center_of_mass());

@@ -2,6 +2,7 @@
 
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/input.hpp>
+#include <godot_cpp/classes/scene_tree.hpp>
 
 #include <godot_cpp/variant/utility_functions.hpp>
 
@@ -59,6 +60,13 @@ void Controller::_input(const Ref<InputEvent> &event)
     if (event->is_action_pressed("activate"))
     {
         _control_stack.top()->activate();
+        return;
+    }
+
+    if (event->is_action_pressed("ui_cancel"))
+    {
+        get_tree()->quit();
+        return;
     }
 }
 
@@ -101,6 +109,6 @@ void Controller::update_local_inputs()
     Input *input = Input::get_singleton();
 
     cannonBody->power(-input->get_axis("brake", "throttle"));
-    cannonBody->steer(input->get_axis("turn_left", "turn_right"));
+    cannonBody->steer(-input->get_axis("turn_left", "turn_right"));
     cannonBody->control(input->get_vector("control_right", "control_left", "control_down", "control_up"));
 }
