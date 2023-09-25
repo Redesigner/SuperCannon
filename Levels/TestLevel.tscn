@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://bx2nlku8mjerv"]
 
 [ext_resource type="Material" uid="uid://pn71uf1lemce" path="res://Assets/Materials/grid.material" id="1_ic85h"]
-[ext_resource type="PackedScene" uid="uid://bi6a330114ur0" path="res://Objects/CannonController/CannonController.tscn" id="2_1xfsd"]
+[ext_resource type="PackedScene" uid="uid://0wuu3etnbdyw" path="res://Objects/Controller/Controller.tscn" id="2_kpf6q"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_8bmkd"]
 
@@ -56,16 +56,4 @@ shape = SubResource("ConvexPolygonShape3D_a0hgs")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ramp"]
 mesh = SubResource("PrismMesh_xr8l7")
 
-[node name="CannonController" parent="." instance=ExtResource("2_1xfsd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-mass = 40.0
-
-[node name="FollowCamera3D" type="FollowCamera3D" parent="."]
-target_path = NodePath("../CannonController")
-track_position = true
-position_offset = Vector3(0, 2, 5)
-track_rotation = true
-rotation_offset = Vector3(-15, 0, 0)
-rotation_tracking_rate = 0.25
-current = true
-fov = 60.0
+[node name="Controller" parent="." instance=ExtResource("2_kpf6q")]

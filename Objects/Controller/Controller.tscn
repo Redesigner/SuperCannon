@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://0wuu3etnbdyw"]
+
+[ext_resource type="PackedScene" uid="uid://bi6a330114ur0" path="res://Objects/Assembled/CannonBody.tscn" id="1_tnxl7"]
+
+[node name="Controller" type="Controller"]
+cannon_body_path = NodePath("CannonController")
+
+[node name="CannonController" parent="." instance=ExtResource("1_tnxl7")]
+
+[node name="FollowCamera3D" type="FollowCamera3D" parent="."]
+target_path = NodePath("../CannonController")
+track_position = true
+position_offset = Vector3(0, 2, 5)
+track_rotation = true
+rotation_offset = Vector3(-15, 0, 0)
+rotation_tracking_rate = 0.25
+current = true
+fov = 60.0
