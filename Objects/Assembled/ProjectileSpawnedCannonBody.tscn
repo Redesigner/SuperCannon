@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://dso5sxvsxvine"]
+
+[ext_resource type="PackedScene" uid="uid://bqolv27pto3n8" path="res://Objects/CannonParts/Cannons/BasicCannon.tscn" id="1_564bl"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_xmoed"]
+radius = 0.25
+
+[node name="ProjectileSpawnedCannonBody" type="CannonBody"]
+freeze = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_xmoed")
+
+[node name="BasicCannon" parent="." instance=ExtResource("1_564bl")]
+attachment_path = NodePath("..")

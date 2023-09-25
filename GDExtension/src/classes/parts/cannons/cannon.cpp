@@ -8,6 +8,7 @@
 #include <godot_cpp/variant/utility_functions.hpp>
 
 #include "../../projectiles/projectile.h"
+#include "../../body/cannon_body.h"
 
 using namespace godot;
 
@@ -89,13 +90,18 @@ void Cannon::control(Vector2 input)
 void Cannon::activate()
 {
     Projectile *projectile = Object::cast_to<Projectile>(_projectile_scene->instantiate());
-    get_tree()->get_current_scene()->add_child(projectile);
-    projectile->set_global_transform(_barrel->get_global_transform());
-
     const Vector3 projectileFireDirection = -_barrel->get_global_transform().get_basis().get_column(2);
+
+    get_tree()->get_current_scene()->add_child(projectile);
+    Transform3D projectileTransform = _barrel->get_global_transform();
+    projectile->set_global_transform(projectileTransform.translated(projectileFireDirection * 1.0f));
+
     projectile->set_linear_velocity(projectileFireDirection * _projectile_velocity + get_attachment()->get_linear_velocity());
 
     const float projectileMomentum = _projectile_velocity * projectile->get_mass();
     Vector3 attachmentCenterOfMass = get_attachment()->get_global_position() + get_attachment()->get_quaternion().xform(get_attachment()->get_center_of_mass());
     get_attachment()->apply_impulse(projectileMomentum / get_attachment()->get_mass() * -projectileFireDirection, get_global_position() - attachmentCenterOfMass);
+
+    // UtilityFunctions::print( String("[Projectile] projectile spawned, owner set to {0}").format(Array::make(get_attachment()->get_name())) );
+    projectile->set_cannon_owner(get_attachment());
 }

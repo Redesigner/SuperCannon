@@ -6,6 +6,7 @@
 
 namespace godot
 {
+class CannonBody;
 class NodePath;
 class RigidBody3D;
 
@@ -32,11 +33,11 @@ public:
     virtual void _ready() override;
 
 protected:
-    RigidBody3D * get_attachment() const;
+    CannonBody *get_attachment() const;
 
 private:
     DECLARE_PROPERTY(NodePath, attachment_path);
 
-    RigidBody3D *_attachment;
+    CannonBody *_attachment;
 };
 }

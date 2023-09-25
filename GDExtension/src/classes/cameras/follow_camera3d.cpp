@@ -97,7 +97,7 @@ void FollowCamera3D::_process(double delta)
         Quaternion newQuat = targetQuat * _rotation_offset;
         basis.set_quaternion(oldQuat.slerp(newQuat, _rotation_tracking_rate));
         transform.set_basis(basis);
-        set_transform(transform);
+        set_global_transform(transform);
         
         Vector3 rotation = get_global_rotation_degrees();
         rotation.z = 0.0f;
@@ -111,6 +111,16 @@ void FollowCamera3D::_process(double delta)
         set_global_position(_target->get_global_position() + calculatedOffset);
     }
 
+}
+
+
+void FollowCamera3D::set_target(Node3D *target)
+{
+    if (!target)
+    {
+        return;
+    }
+    _target = target;
 }
 
 

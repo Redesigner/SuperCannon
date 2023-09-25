@@ -8,7 +8,7 @@ height = 0.4
 radius = 0.2
 
 [node name="CannonProjectile" type="CannonSpawnerProjectile"]
-cannon_scene_path = "res://Objects/CannonParts/Cannons/BasicCannon.tscn"
+cannon_scene_path = "res://Objects/Assembled/ProjectileSpawnedCannonBody.tscn"
 mass = 25.0
 continuous_cd = true
 

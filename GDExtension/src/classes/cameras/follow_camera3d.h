@@ -22,6 +22,8 @@ public:
 
     virtual void _process(double delta) override;
 
+    void set_target(Node3D *target);
+
     void set_rotation_offset(Vector3 rotation_offset);
     Vector3 get_rotation_offset() const;
 

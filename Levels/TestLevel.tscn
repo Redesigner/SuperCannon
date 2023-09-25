@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bx2nlku8mjerv"]
+[gd_scene load_steps=12 format=3 uid="uid://bx2nlku8mjerv"]
 
 [ext_resource type="Material" uid="uid://pn71uf1lemce" path="res://Assets/Materials/grid.material" id="1_ic85h"]
 [ext_resource type="PackedScene" uid="uid://0wuu3etnbdyw" path="res://Objects/Controller/Controller.tscn" id="2_kpf6q"]
@@ -25,6 +25,12 @@ points = PackedVector3Array(5, 1, 5, 5, 1, -5, 5, -1, 5, 5, -1, -5, -5, -1, 5, -
 [sub_resource type="PrismMesh" id="PrismMesh_xr8l7"]
 left_to_right = 1.0
 size = Vector3(10, 2, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xdotn"]
+size = Vector3(5, 5, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_tdrqv"]
+size = Vector3(5, 5, 0.1)
 
 [node name="TestLevel" type="Node3D"]
 
@@ -57,4 +63,13 @@ shape = SubResource("ConvexPolygonShape3D_a0hgs")
 mesh = SubResource("PrismMesh_xr8l7")
 
 [node name="Controller" parent="." instance=ExtResource("2_kpf6q")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 2, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13, 26)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_xdotn")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+mesh = SubResource("BoxMesh_tdrqv")

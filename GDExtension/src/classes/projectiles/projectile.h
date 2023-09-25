@@ -4,6 +4,7 @@
 
 namespace godot
 {
+class CannonBody;
 class Projectile : public RigidBody3D
 {
     GDCLASS(Projectile, RigidBody3D);
@@ -24,7 +25,13 @@ public:
 
     virtual void on_collision(Node3D *other_body, Vector3 position, Vector3 normal);
 
+    void set_cannon_owner(CannonBody *owner);
+
+    CannonBody *get_cannon_owner() const;
+
 private:
     bool _collided_this_frame = false;
+
+    CannonBody *_cannon_owner = nullptr;
 };
 }

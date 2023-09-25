@@ -5,6 +5,8 @@
 
 #include <godot_cpp/variant/utility_functions.hpp>
 
+#include "../body/cannon_body.h"
+
 using namespace godot;
 
 Part::Part()
@@ -34,7 +36,7 @@ void Part::_ready()
         return;
     }
 
-    ASSIGN_NODE(_attachment, RigidBody3D, _attachment_path);
+    ASSIGN_NODE(_attachment, CannonBody, _attachment_path);
 }
 
 void Part::power(float amount)
@@ -53,7 +55,7 @@ void Part::activate()
 {
 }
 
-RigidBody3D * Part::get_attachment() const
+CannonBody * Part::get_attachment() const
 {
     return _attachment;
 }

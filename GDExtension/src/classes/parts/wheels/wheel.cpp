@@ -9,6 +9,8 @@
 
 #include <godot_cpp/variant/utility_functions.hpp>
 
+#include "../../body/cannon_body.h"
+
 using namespace godot;
 
 Wheel::Wheel()

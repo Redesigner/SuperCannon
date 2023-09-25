@@ -5,6 +5,7 @@
 #include <godot_cpp/variant/utility_functions.hpp>
 
 #include "../parts/part.h"
+#include "../controller/controller.h"
 
 using namespace godot;
 
@@ -58,6 +59,12 @@ void CannonBody::_physics_process(double delta)
 }
 
 
+void CannonBody::take_control(Controller *controller)
+{
+    _controller = controller;
+}
+
+
 void CannonBody::power(float input)
 {
     for (Part *part : _attached_parts)
@@ -93,6 +100,10 @@ void CannonBody::activate()
     }
 }
 
+Controller *CannonBody::get_controller() const
+{
+    return _controller;
+}
 
 void CannonBody::_notification(int p_what)
 {

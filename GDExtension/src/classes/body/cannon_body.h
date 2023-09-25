@@ -7,6 +7,7 @@
 namespace godot
 {
 class Part;
+class Controller;
 class CannonBody : public RigidBody3D
 {
     GDCLASS(CannonBody, RigidBody3D);
@@ -23,6 +24,8 @@ public:
 
     virtual void _physics_process(double delta) override;
 
+    void take_control(Controller *controller);
+
     void power(float input);
 
     void steer(float input);
@@ -30,6 +33,8 @@ public:
     void control(Vector2 input);
 
     void activate();
+
+    Controller * get_controller() const;
 
 protected:
     void _notification(int p_what);
@@ -39,5 +44,7 @@ private:
     std::vector<Part *> _attached_parts;
 
     Transform3D _spawn_transform;
+
+    Controller *_controller = nullptr;
 };
 }

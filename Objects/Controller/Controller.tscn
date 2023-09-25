@@ -3,12 +3,13 @@
 [ext_resource type="PackedScene" uid="uid://bi6a330114ur0" path="res://Objects/Assembled/CannonBody.tscn" id="1_tnxl7"]
 
 [node name="Controller" type="Controller"]
-cannon_body_path = NodePath("CannonController")
+cannon_body_path = NodePath("CannonBody")
+follow_camera_path = NodePath("FollowCamera3D")
 
-[node name="CannonController" parent="." instance=ExtResource("1_tnxl7")]
+[node name="CannonBody" parent="." instance=ExtResource("1_tnxl7")]
 
 [node name="FollowCamera3D" type="FollowCamera3D" parent="."]
-target_path = NodePath("../CannonController")
+target_path = NodePath("../CannonBody")
 track_position = true
 position_offset = Vector3(0, 2, 5)
 track_rotation = true

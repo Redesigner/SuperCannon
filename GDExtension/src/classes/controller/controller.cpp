@@ -7,6 +7,7 @@
 #include <godot_cpp/variant/utility_functions.hpp>
 
 #include "../body/cannon_body.h"
+#include "../cameras/follow_camera3d.h"
 
 using namespace godot;
 
@@ -24,6 +25,7 @@ Controller::~Controller()
 void Controller::_bind_methods()
 {
     BIND_PROPERTY(Variant::NODE_PATH, cannon_body_path, Controller);
+    BIND_PROPERTY(Variant::NODE_PATH, follow_camera_path, Controller);
 }
 
 
@@ -40,6 +42,7 @@ void Controller::_ready()
         WARN_PRINT("Cannon Body found at path not valid.");
         return;
     }
+    ASSIGN_NODE(_camera, FollowCamera3D, _follow_camera_path);
 
     take_control(body);
 }
@@ -88,7 +91,10 @@ void Controller::take_control(CannonBody *pawn)
     {
         return;
     }
+    UtilityFunctions::print( String("[Controller] taking control of new pawn {0}").format(Array::make(pawn->get_name())));
     _control_stack.push(pawn);
+    pawn->take_control(this);
+    _camera->set_target(pawn);
 }
 
 

@@ -12,6 +12,7 @@ namespace godot
 {
 class CannonBody;
 class InputEvent;
+class FollowCamera3D;
 
 // this has to extend node3d so we can place it in the world properly
 class Controller : public Node3D
@@ -38,6 +39,9 @@ private:
     void update_local_inputs();
 
     DECLARE_PROPERTY(NodePath, cannon_body_path);
+
+    DECLARE_PROPERTY(NodePath, follow_camera_path);
+    FollowCamera3D *_camera;
 
     std::stack<CannonBody *> _control_stack;
 
