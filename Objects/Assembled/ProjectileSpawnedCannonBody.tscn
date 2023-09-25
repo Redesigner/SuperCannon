@@ -12,4 +12,5 @@ freeze = true
 shape = SubResource("SphereShape3D_xmoed")
 
 [node name="BasicCannon" parent="." instance=ExtResource("1_564bl")]
+min_pitch = -90.0
 attachment_path = NodePath("..")

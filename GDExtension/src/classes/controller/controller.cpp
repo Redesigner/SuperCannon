@@ -71,6 +71,20 @@ void Controller::_input(const Ref<InputEvent> &event)
         get_tree()->quit();
         return;
     }
+
+    if (event->is_action_pressed("exit_control"))
+    {
+        if (_control_stack.size() <= 1)
+        {
+            return;
+        }
+
+        CannonBody *oldTarget =_control_stack.top();
+        _control_stack.pop();
+        _camera->set_target(_control_stack.top());
+        oldTarget->queue_free();
+        return;
+    }
 }
 
 
