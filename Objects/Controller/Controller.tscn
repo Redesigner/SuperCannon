@@ -11,9 +11,9 @@ follow_camera_path = NodePath("FollowCamera3D")
 [node name="FollowCamera3D" type="FollowCamera3D" parent="."]
 target_path = NodePath("../CannonBody")
 track_position = true
-position_offset = Vector3(0, 2, 5)
+position_offset = Vector3(0, 1.5, 5)
 track_rotation = true
-rotation_offset = Vector3(-15, 0, 0)
+rotation_offset = Vector3(-10, 0, 0)
 rotation_tracking_rate = 0.25
 current = true
 fov = 60.0

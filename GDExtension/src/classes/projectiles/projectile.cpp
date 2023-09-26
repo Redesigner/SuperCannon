@@ -33,7 +33,7 @@ void Projectile::_ready()
         return;
     }
 
-    connect("body_entered", Callable(this, "collide"));
+    connect("body_shape_entered", Callable(this, "collide"));
 }
 
 void Projectile::_integrate_forces(PhysicsDirectBodyState3D *state)
@@ -41,7 +41,7 @@ void Projectile::_integrate_forces(PhysicsDirectBodyState3D *state)
 }
 
 // I'd REALLY like to do this another way, but it seems without making it a module, this is the best I can do
-void Projectile::collide(Node *body)
+void Projectile::collide(RID body_rid, Node *body, int body_shape_index, int local_shape_index)
 {
 
     Node3D *otherBody = Object::cast_to<Node3D>(body);
@@ -61,8 +61,8 @@ void Projectile::collide(Node *body)
     {
         return;
     }
-    const Vector3 globalPosition = state->get_contact_collider_position(0);
-    const Vector3 normal = state->get_contact_local_normal(0);
+    const Vector3 globalPosition = state->get_contact_collider_position(local_shape_index);
+    const Vector3 normal = state->get_contact_local_normal(local_shape_index);
 
     UtilityFunctions::print( String("[Projectile] collision occurred at {0} with normal {1}").format(Array::make(globalPosition, normal)) );
 

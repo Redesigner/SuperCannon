@@ -36,7 +36,13 @@ public:
     void take_control(CannonBody *pawn);
 
 private:
-    void update_local_inputs();
+    void update_local_inputs(double delta);
+
+    void rotate_camera(Vector2 input);
+
+    DECLARE_PROPERTY(float, camera_rotation_rate);
+
+    DECLARE_PROPERTY(float, camera_rotation_rate_joystick);
 
     DECLARE_PROPERTY(NodePath, cannon_body_path);
 

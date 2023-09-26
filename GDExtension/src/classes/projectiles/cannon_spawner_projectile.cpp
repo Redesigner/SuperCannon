@@ -58,13 +58,16 @@ void CannonSpawnerProjectile::on_collision(Node3D *other_body, Vector3 position,
     get_tree()->get_current_scene()->add_child(projectile);
     projectile->set_global_position(position);
 
-    Vector3 up = Vector3(0.0f, 1.0f, 0.0f);
+    Vector3 up = Vector3(0.0f, -1.0f, 0.0f);
     // Prevent axis locking
     if (Math::abs(normal.y) >= 0.95f)
     {
         up = Vector3(position - get_global_position()).normalized();
     }
-    projectile->look_at(position + normal, up);
+    projectile->look_at(normal + position, up);
+    Quaternion quaternion = projectile->get_quaternion();
+    Quaternion rotationOffset = Quaternion(Vector3(-Math_PI / 2.0f, 0.0f, 0.0f));
+    projectile->set_quaternion(quaternion * rotationOffset);
 
     CannonBody *body = get_cannon_owner();
     if (!body)

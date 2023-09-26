@@ -90,20 +90,18 @@ void FollowCamera3D::_process(double delta)
 
     if (_track_rotation)
     {
+        const Vector3 targetRotation = _target->get_global_rotation();
         Transform3D transform = get_global_transform();
         Basis basis = transform.get_basis();
-        Quaternion targetQuat = targetBasis.get_quaternion();
-        Quaternion oldQuat = basis.get_quaternion();
-        Quaternion newQuat = targetQuat * _rotation_offset;
-        basis.set_quaternion(oldQuat.slerp(newQuat, _rotation_tracking_rate));
+        const Quaternion targetQuat = Quaternion(Vector3(targetRotation.x, targetRotation.y, 0.0f)); // drop the rotation along the z axis
+        const Quaternion oldQuat = basis.get_quaternion();
+        const Quaternion newQuat = targetQuat * _rotation_offset;
+        const Quaternion result = oldQuat.slerp(newQuat, _rotation_tracking_rate);
+        basis.set_quaternion(result);
         transform.set_basis(basis);
         set_global_transform(transform);
-        
-        Vector3 rotation = get_global_rotation_degrees();
-        rotation.z = 0.0f;
-        set_global_rotation_degrees(rotation);
 
-        calculatedOffset = targetBasis.get_quaternion().xform(calculatedOffset); 
+        calculatedOffset = result.xform(calculatedOffset); 
     }
 
     if (_track_position)
@@ -133,4 +131,15 @@ void FollowCamera3D::set_rotation_offset(Vector3 rotation_offset)
 Vector3 FollowCamera3D::get_rotation_offset() const
 {
     return _rotation_offset.get_euler() * (180.0f / Math_PI);
+}
+
+
+void FollowCamera3D::rotate(Vector2 rotation)
+{
+    const float axisLockingThreshold = 0.01f;
+    const float axisExtents = Math_PI / 2.0f - axisLockingThreshold;
+    Vector3 currentAngle = _rotation_offset.get_euler();
+    currentAngle.x = Math::clamp(rotation.y + currentAngle.x, -axisExtents, axisExtents);
+    currentAngle.y += rotation.x;
+    _rotation_offset = Quaternion(currentAngle);
 }

@@ -21,7 +21,7 @@ public:
 
     virtual void _integrate_forces(PhysicsDirectBodyState3D *state) override;
 
-    void collide(Node *body);
+    void collide(RID body_rid, Node *body, int body_shape_index, int local_shape_index);
 
     virtual void on_collision(Node3D *other_body, Vector3 position, Vector3 normal);
 

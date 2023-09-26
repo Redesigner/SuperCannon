@@ -27,6 +27,8 @@ public:
     void set_rotation_offset(Vector3 rotation_offset);
     Vector3 get_rotation_offset() const;
 
+    void rotate(Vector2 rotation);
+
 private:
     Node3D *_target;
     DECLARE_PROPERTY(NodePath, target_path);
