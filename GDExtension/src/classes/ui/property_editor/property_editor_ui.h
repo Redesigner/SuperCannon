@@ -29,10 +29,15 @@ protected:
 public:
     virtual void _ready() override;
 
+    virtual void _process(double delta) override;
+
     void attach_property(PropertyGetter getter, PropertySetter setter);
 
 private:
-    void set_property_value(bool value_changed);
+    void slider_grabbed();
+    void slider_released(bool value_changed);
+
+    void update_values();
 
 
     DECLARE_PROPERTY(NodePath, slider_path);
@@ -41,9 +46,20 @@ private:
     DECLARE_PROPERTY(NodePath, label_path);
     Label *label;
 
+    DECLARE_PROPERTY(NodePath, name_label_path);
+    Label *name_label;
+    
+    DECLARE_PROPERTY(String, property_display_name);
+
+    DECLARE_PROPERTY(float, value_max);
+    DECLARE_PROPERTY(float, value_min);
+    DECLARE_PROPERTY(String, property_suffix);
+
     PropertyGetter property_getter;
 
     PropertySetter property_setter;
+
+    bool is_slider_grabbed = false;
     
 };
 }

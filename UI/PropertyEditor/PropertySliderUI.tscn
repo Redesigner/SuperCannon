@@ -2,13 +2,35 @@
 
 [node name="PropertySliderUI" type="PropertyEditorUI"]
 slider_path = NodePath("HSlider")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+label_path = NodePath("Panel/Label")
+name_label_path = NodePath("NameLabel")
+value_min = 5.78125
 
 [node name="HSlider" type="HSlider" parent="."]
 layout_mode = 0
-offset_right = 493.0
-offset_bottom = 16.0
+offset_left = 32.0
+offset_top = 32.0
+offset_right = 232.0
+offset_bottom = 48.0
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 237.0
+offset_top = 25.0
+offset_right = 301.0
+offset_bottom = 50.0
+
+[node name="Label" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 5.0
+offset_right = 65.0
+offset_bottom = 26.0
+text = "Test"
+
+[node name="NameLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 11.0
+offset_right = 72.0
+offset_bottom = 34.0
+text = "Name Label"

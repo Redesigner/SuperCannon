@@ -26,6 +26,13 @@ public:
     virtual void _ready() override;
 
     void set_wheel_friction(float friction);
+    float get_wheel_friction() const;
+
+    void set_spring_constant(float spring);
+    float get_spring_constant() const;
+
+    void set_wheel_torque(float torque);
+    float get_wheel_torque() const;
 
 private:
     std::vector<Wheel *> wheels;
@@ -35,5 +42,11 @@ private:
 
     DECLARE_PROPERTY(NodePath, friction_editor_path);
     PropertyEditorUI *friction_editor;
+
+    DECLARE_PROPERTY(NodePath, spring_editor_path);
+    PropertyEditorUI *spring_editor;
+
+    DECLARE_PROPERTY(NodePath, torque_editor_path);
+    PropertyEditorUI *torque_editor;
 };
 }

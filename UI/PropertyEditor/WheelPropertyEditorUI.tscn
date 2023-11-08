@@ -4,6 +4,8 @@
 
 [node name="WheelPropertyEditorUI" type="WheelPropertyEditorUI"]
 friction_editor_path = NodePath("FrictionSlider")
+spring_editor_path = NodePath("SpringSlider")
+torque_editor_path = NodePath("TorqueSlider")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -11,5 +13,25 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="FrictionSlider" parent="." instance=ExtResource("1_w85ly")]
+property_display_name = "Friction"
+value_max = 1.0
+value_min = 0.0
 layout_mode = 0
-anchors_preset = 0
+
+[node name="SpringSlider" parent="." instance=ExtResource("1_w85ly")]
+property_display_name = "Spring Constant"
+value_max = 3000.0
+value_min = 0.0
+property_suffix = " N/m"
+layout_mode = 0
+offset_top = 40.0
+offset_bottom = 40.0
+
+[node name="TorqueSlider" parent="." instance=ExtResource("1_w85ly")]
+property_display_name = "Torque"
+value_max = 100.0
+value_min = 0.0
+property_suffix = " Nm"
+layout_mode = 0
+offset_top = 80.0
+offset_bottom = 80.0
