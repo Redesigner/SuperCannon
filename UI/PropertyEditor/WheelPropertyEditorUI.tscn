@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://c22laq706q5vs"]
+
+[ext_resource type="PackedScene" uid="uid://b7q8jx8n2m04f" path="res://UI/PropertyEditor/PropertySliderUI.tscn" id="1_w85ly"]
+
+[node name="WheelPropertyEditorUI" type="WheelPropertyEditorUI"]
+friction_editor_path = NodePath("FrictionSlider")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FrictionSlider" parent="." instance=ExtResource("1_w85ly")]
+layout_mode = 0
+anchors_preset = 0

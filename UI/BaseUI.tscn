@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://chl0uy54nnfyt"]
+
+[ext_resource type="PackedScene" uid="uid://c22laq706q5vs" path="res://UI/PropertyEditor/WheelPropertyEditorUI.tscn" id="1_jr82f"]
+
+[node name="BaseUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="WheelPropertyEditorUI" parent="." instance=ExtResource("1_jr82f")]
+layout_mode = 1

@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://b7q8jx8n2m04f"]
+
+[node name="PropertySliderUI" type="PropertyEditorUI"]
+slider_path = NodePath("HSlider")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HSlider" type="HSlider" parent="."]
+layout_mode = 0
+offset_right = 493.0
+offset_bottom = 16.0

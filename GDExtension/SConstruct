@@ -29,6 +29,9 @@ sources += Glob("src/classes/parts/cannons/*.cpp")
 
 sources += Glob("src/classes/projectiles/*.cpp")
 
+sources += Glob("src/classes/ui/slider/*.cpp")
+sources += Glob("src/classes/ui/property_editor/*.cpp")
+
 if env["platform"] == "macos":
     library = env.SharedLibrary(
         "../bin/transhumanism.{}.{}.framework/transhumanism.{}.{}".format(

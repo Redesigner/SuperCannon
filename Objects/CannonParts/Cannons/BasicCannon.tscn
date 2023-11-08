@@ -14,7 +14,7 @@ yaw_speed = 45.0
 projectile_velocity = 50.0
 barrel_path = NodePath("BaseMesh/Barrel")
 base_path = NodePath("BaseMesh")
-projectile_scene_path = "res://Objects/Projectiles/CannonProjectile.tscn"
+projectile_scene_path = "res://Objects/Projectiles/TestProjectile.tscn"
 
 [node name="BaseMesh" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_p2w57")

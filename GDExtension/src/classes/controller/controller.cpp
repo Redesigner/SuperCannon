@@ -96,8 +96,29 @@ void Controller::_input(const Ref<InputEvent> &event)
         return;
     }
 
+    if (event->is_action_pressed("toggle_mouse"))
+    {
+        Input *input = Input::get_singleton();
+        Input::MouseMode current_mouse_mode = input->get_mouse_mode();
+        if (current_mouse_mode == Input::MOUSE_MODE_CAPTURED)
+        {
+            input->set_mouse_mode(Input::MOUSE_MODE_VISIBLE);
+        }
+        else
+        {
+            input->set_mouse_mode(Input::MOUSE_MODE_CAPTURED);
+        }
+        return;
+    }
+
     if (event->is_class("InputEventMouseMotion"))
     {
+        Input *input = Input::get_singleton();
+        Input::MouseMode current_mouse_mode = input->get_mouse_mode();
+        if (current_mouse_mode == Input::MOUSE_MODE_VISIBLE)
+        {
+            return;
+        }
         InputEventMouseMotion *mouseMotionEvent = static_cast<InputEventMouseMotion *>(*event);
         rotate_camera(mouseMotionEvent->get_relative());
         return;

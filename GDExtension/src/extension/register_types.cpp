@@ -18,6 +18,10 @@
 #include "../classes/projectiles/projectile.h"
 #include "../classes/projectiles/cannon_spawner_projectile.h"
 
+#include "../classes/ui/slider/slider_ui.h"
+#include "../classes/ui/property_editor/property_editor_ui.h"
+#include "../classes/ui/property_editor/wheel_property_editor_ui.h"
+
 using namespace godot;
 
 void initialize_transhuman_module(ModuleInitializationLevel p_level) {
@@ -37,6 +41,10 @@ void initialize_transhuman_module(ModuleInitializationLevel p_level) {
 
     ClassDB::register_class<Projectile>();
     ClassDB::register_class<CannonSpawnerProjectile>();
+
+    ClassDB::register_class<SliderUI>();
+    ClassDB::register_class<PropertyEditorUI>();
+    ClassDB::register_class<WheelPropertyEditorUI>();
 }
 
 void uninitialize_transhuman_module(ModuleInitializationLevel p_level) {

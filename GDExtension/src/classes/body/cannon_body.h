@@ -36,15 +36,29 @@ public:
 
     Controller * get_controller() const;
 
+    template<typename T>
+    std::vector<T *> get_parts_of_type() const
+    {
+        std::vector<T *> returned_parts = std::vector<T *>();
+        for (Part *part : attached_parts)
+        {
+            if (T* typed_part = Object::cast_to<T>(part))
+            {
+                returned_parts.push_back(typed_part);
+            }
+        }
+        return returned_parts;
+    }
+
 protected:
     void _notification(int p_what);
 
 private:
     // use ref counted instead of pointer?
-    std::vector<Part *> _attached_parts;
+    std::vector<Part *> attached_parts;
 
-    Transform3D _spawn_transform;
+    Transform3D spawn_transform;
 
-    Controller *_controller = nullptr;
+    Controller *controller = nullptr;
 };
 }

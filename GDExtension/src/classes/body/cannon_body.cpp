@@ -11,8 +11,8 @@ using namespace godot;
 
 CannonBody::CannonBody()
 {
-    _attached_parts = std::vector<Part *>();
-    _spawn_transform = Transform3D();
+    attached_parts = std::vector<Part *>();
+    spawn_transform = Transform3D();
 }
 
 CannonBody::~CannonBody()
@@ -29,14 +29,14 @@ void CannonBody::_ready()
     {
         return;
     }
-    _spawn_transform = get_global_transform();
+    spawn_transform = get_global_transform();
 
     TypedArray<Node> children = get_children();
     for (int i = 0; i < children.size(); i++)
     {
         if (Part *part = Object::cast_to<Part>(children[i]))
         {
-            _attached_parts.push_back(part);
+            attached_parts.push_back(part);
         }
     }
 }
@@ -54,20 +54,20 @@ void CannonBody::_physics_process(double delta)
         UtilityFunctions::print("[CannonBody] fell below the world, resetting.");
         set_linear_velocity(Vector3());
         set_angular_velocity(Vector3());
-        set_global_transform(_spawn_transform);
+        set_global_transform(spawn_transform);
     }
 }
 
 
 void CannonBody::take_control(Controller *controller)
 {
-    _controller = controller;
+    controller = controller;
 }
 
 
 void CannonBody::power(float input)
 {
-    for (Part *part : _attached_parts)
+    for (Part *part : attached_parts)
     {
         part->power(input);
     }
@@ -76,7 +76,7 @@ void CannonBody::power(float input)
 
 void CannonBody::steer(float input)
 {
-    for (Part *part : _attached_parts)
+    for (Part *part : attached_parts)
     {
         part->steer(input);
     }
@@ -85,7 +85,7 @@ void CannonBody::steer(float input)
 
 void CannonBody::control(Vector2 input)
 {
-    for (Part *part : _attached_parts)
+    for (Part *part : attached_parts)
     {
         part->control(input);
     }
@@ -94,7 +94,7 @@ void CannonBody::control(Vector2 input)
 
 void CannonBody::activate()
 {
-    for (Part *part : _attached_parts)
+    for (Part *part : attached_parts)
     {
         part->activate();
     }
@@ -102,7 +102,7 @@ void CannonBody::activate()
 
 Controller *CannonBody::get_controller() const
 {
-    return _controller;
+    return controller;
 }
 
 void CannonBody::_notification(int p_what)

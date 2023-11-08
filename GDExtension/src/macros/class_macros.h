@@ -70,14 +70,14 @@ private:
 #define ASSIGN_NODE(node, node_type, path)\
     if (path.is_empty())\
     {\
-        WARNING_HELPER("Node path for '"#node"' not set.");\
+        WARNING_HELPER("Node path for '"#node"' not set.")\
     }\
     else\
     {\
-        node = dynamic_cast<node_type *>(get_node_or_null(path));\
+        node = get_node<node_type>(path);\
         if (!node)\
         {\
-            WARNING_HELPER("Could not find node of type '" #node_type"' at path '{0}'.", path);\
+            WARNING_HELPER("Could not find node of type '" #node_type"' at path '{0}'.", path)\
         }\
     }\
 
@@ -85,4 +85,6 @@ private:
 /// @brief Gets a Node from a NodePath and casts it to the appropriate type
 /// @param node node being assigned to
 /// @param path NodePath being looked up
-#define ASSIGN_NODE_NOWARN(node, node_type, path) node = dynamic_cast<node_type *>(get_node_or_null(path));
+#define ASSIGN_NODE_NOWARN(node, node_type, path) node = get_node<node_type>(path);
+
+#define IN_EDITOR() Engine::get_singleton()->is_editor_hint()
