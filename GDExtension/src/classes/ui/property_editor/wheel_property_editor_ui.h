@@ -34,6 +34,9 @@ public:
     void set_wheel_torque(float torque);
     float get_wheel_torque() const;
 
+    void set_suspension(float suspension);
+    float get_suspension() const;
+
 private:
     std::vector<Wheel *> wheels;
 
@@ -48,5 +51,8 @@ private:
 
     DECLARE_PROPERTY(NodePath, torque_editor_path);
     PropertyEditorUI *torque_editor;
+
+    DECLARE_PROPERTY(NodePath, suspension_editor_path);
+    PropertyEditorUI *suspension_editor;
 };
 }

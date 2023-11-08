@@ -36,6 +36,7 @@ size = Vector3(5, 5, 0.1)
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_gyqya"]
 height = 5.0
+radius = 0.25
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i3u27"]
 albedo_texture = ExtResource("3_sjidi")
@@ -43,6 +44,8 @@ uv1_scale = Vector3(2, 2, 2)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_es8xk"]
 material = SubResource("StandardMaterial3D_i3u27")
+top_radius = 0.25
+bottom_radius = 0.25
 height = 5.0
 
 [node name="TestLevel" type="Node3D"]
@@ -75,6 +78,15 @@ shape = SubResource("ConvexPolygonShape3D_a0hgs")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ramp"]
 mesh = SubResource("PrismMesh_xr8l7")
 
+[node name="Ramp2" type="StaticBody3D" parent="."]
+transform = Transform3D(1.19209e-07, 0, 1, 0, 1, 0, -1, 0, 1.19209e-07, 0, 1, 29)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ramp2"]
+shape = SubResource("ConvexPolygonShape3D_a0hgs")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ramp2"]
+mesh = SubResource("PrismMesh_xr8l7")
+
 [node name="Controller" parent="." instance=ExtResource("2_kpf6q")]
 transform = Transform3D(-1, 0, -1.78814e-07, 0, 1, 0, 1.78814e-07, 0, -1, 1, 2, 8)
 
@@ -88,44 +100,43 @@ shape = SubResource("BoxShape3D_xdotn")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
 mesh = SubResource("BoxMesh_tdrqv")
 
-[node name="StaticBody3D2" type="StaticBody3D" parent="."]
+[node name="Bump" type="StaticBody3D" parent="."]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -15, 0, 11)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bump"]
 shape = SubResource("CylinderShape3D_gyqya")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D2"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bump"]
 mesh = SubResource("CylinderMesh_es8xk")
-skeleton = NodePath("../../StaticBody3D2")
 
-[node name="StaticBody3D3" type="StaticBody3D" parent="."]
+[node name="Bump2" type="StaticBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -15, 0, 10)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bump2"]
+shape = SubResource("CylinderShape3D_gyqya")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bump2"]
+mesh = SubResource("CylinderMesh_es8xk")
+skeleton = NodePath("../../Bump")
+
+[node name="Bump3" type="StaticBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -15, 0, 9)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bump3"]
+shape = SubResource("CylinderShape3D_gyqya")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bump3"]
+mesh = SubResource("CylinderMesh_es8xk")
+skeleton = NodePath("../../Bump")
+
+[node name="Bump4" type="StaticBody3D" parent="."]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -15, 0, 8)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D3"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bump4"]
 shape = SubResource("CylinderShape3D_gyqya")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D3"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bump4"]
 mesh = SubResource("CylinderMesh_es8xk")
-skeleton = NodePath("../../StaticBody3D2")
-
-[node name="StaticBody3D4" type="StaticBody3D" parent="."]
-transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -15, 0, 5)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D4"]
-shape = SubResource("CylinderShape3D_gyqya")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D4"]
-mesh = SubResource("CylinderMesh_es8xk")
-skeleton = NodePath("../../StaticBody3D2")
-
-[node name="StaticBody3D5" type="StaticBody3D" parent="."]
-transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -15, 0, 2)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D5"]
-shape = SubResource("CylinderShape3D_gyqya")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D5"]
-mesh = SubResource("CylinderMesh_es8xk")
-skeleton = NodePath("../../StaticBody3D2")
+skeleton = NodePath("../../Bump")
 
 [node name="BaseUI" parent="." instance=ExtResource("4_465wk")]

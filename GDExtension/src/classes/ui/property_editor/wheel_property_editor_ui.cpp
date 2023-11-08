@@ -25,6 +25,7 @@ void WheelPropertyEditorUI::_bind_methods()
     BIND_PROPERTY(Variant::NODE_PATH, friction_editor_path, WheelPropertyEditorUI);
     BIND_PROPERTY(Variant::NODE_PATH, spring_editor_path, WheelPropertyEditorUI);
     BIND_PROPERTY(Variant::NODE_PATH, torque_editor_path, WheelPropertyEditorUI);
+    BIND_PROPERTY(Variant::NODE_PATH, suspension_editor_path, WheelPropertyEditorUI);
 }
 
 void WheelPropertyEditorUI::_ready()
@@ -41,6 +42,7 @@ void WheelPropertyEditorUI::_ready()
     ASSIGN_NODE(friction_editor, PropertyEditorUI, _friction_editor_path);
     ASSIGN_NODE(spring_editor, PropertyEditorUI, _spring_editor_path);
     ASSIGN_NODE(torque_editor, PropertyEditorUI, _torque_editor_path);
+    ASSIGN_NODE(suspension_editor, PropertyEditorUI, _suspension_editor_path);
 
     friction_editor->attach_property(
         [this]() { return get_wheel_friction(); },
@@ -53,6 +55,10 @@ void WheelPropertyEditorUI::_ready()
     torque_editor->attach_property(
         [this]() { return get_wheel_torque(); },
         [this](float torque){ set_wheel_torque(torque); }
+    );
+    suspension_editor->attach_property(
+        [this]() { return get_suspension(); },
+        [this](float suspension){ set_suspension(suspension); }
     );
 
     if (!cannon_body)
@@ -110,4 +116,24 @@ float WheelPropertyEditorUI::get_wheel_torque() const
         return 0.0f;
     }
     return wheels[0]->get_torque();
+}
+
+void WheelPropertyEditorUI::set_suspension(float suspension)
+{
+    for (Wheel *wheel : wheels)
+    {
+        wheel->set_max_suspension_length(suspension);
+        Vector3 position = wheel->get_position();
+        position.y = 1 - suspension;
+        wheel->set_position(position);
+    }
+}
+
+float WheelPropertyEditorUI::get_suspension() const
+{
+    if (wheels.size() <= 0)
+    {
+        return 0.0f;
+    }
+    return wheels[0]->get_max_suspension_length();
 }
